@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prayer Room</title>
 
-  <!-- IMPORTANT: absolute paths -->
-  <link rel="stylesheet" href="/styles.css" />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- GitHub Pages–safe relative paths -->
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./favicon.ico" />
 </head>
 
 <body>
@@ -43,47 +44,40 @@
         </div>
       </section>
 
-      <!-- Center -->
       <section class="center">
-        <!-- Daily List -->
         <div class="pane">
           <div class="paneHead greenHead">
             <div class="paneTitle">Daily Prayer List</div>
             <div class="paneBtns">
-              <button class="btn mini" id="saveList">Save</button>
+              <button class="btn mini cream" id="saveList">Save</button>
             </div>
           </div>
           <div class="paneBody">
-            <textarea id="dailyList" class="ta greenTa"></textarea>
+            <textarea class="ta greenTa" id="dailyList"></textarea>
+            <div class="status" id="status"></div>
           </div>
         </div>
 
-        <!-- Prayers -->
         <div class="pane">
           <div class="paneHead blueHead">
-            <div class="paneTitle">Prayers &amp; Petitions</div>
+            <div class="paneTitle">Prayers & Petitions</div>
             <div class="paneBtns">
-              <span class="dateLabel">
-                Date
-                <input type="date" id="prayerDate" />
-              </span>
-              <button class="btn mini" id="todayBtn">Today</button>
-              <button class="btn mini" id="savePrayer">Save</button>
+              <input type="date" id="prayerDate" />
+              <button class="btn mini cream" id="todayBtn">Today</button>
+              <button class="btn mini cream" id="savePrayer">Save</button>
             </div>
           </div>
           <div class="paneBody">
-            <textarea id="prayerText" class="ta blueTa"></textarea>
-            <div class="status" id="status"></div>
+            <textarea class="ta blueTa" id="prayerText"></textarea>
           </div>
         </div>
       </section>
 
-      <!-- Doctrine -->
       <section class="card doctrine">
         <div class="cardHead doctrineHead">
-          <button class="btn outline mini" id="docPrev">Prev</button>
+          <button class="btn mini outline" id="docPrev">Prev</button>
           <div class="doctrineTitle" id="doctrineTitle"></div>
-          <button class="btn outline mini" id="docNext">Next</button>
+          <button class="btn mini outline" id="docNext">Next</button>
         </div>
         <div class="cardBody doctrineBody">
           <div class="bigText gold" id="doctrineText"></div>
@@ -92,7 +86,7 @@
     </main>
   </div>
 
-  <!-- IMPORTANT: absolute path -->
-  <script src="/app.js"></script>
+  <!-- GitHub Pages–safe relative path -->
+  <script src="./app.js"></script>
 </body>
 </html>
