@@ -84,7 +84,7 @@ async function importBackup(file) {
   try { payload = JSON.parse(await file.text()); } catch { alert("Invalid backup file."); return; }
 
   const replace = confirm("Import backup:\n\nOK = Replace everything\nCancel = Merge");
-  if (replace) localStorage.clear();
+  if (replace) //localStorage.clear();
 
   if (payload?.name !== undefined) localStorage.setItem(K.name, String(payload.name || ""));
   if (payload?.daily !== undefined) localStorage.setItem(K.daily, String(payload.daily || ""));
