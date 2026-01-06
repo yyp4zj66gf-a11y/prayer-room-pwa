@@ -1,17 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prayer Room</title>
 
-  <!-- Auto-send visitors to the friendly downloads page -->
-  <meta http-equiv="refresh" content="0; url=./downloads.html" />
+  <!-- IMPORTANT: absolute paths -->
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 </head>
+
 <body>
-  <p>
-    Redirecting to downloads…
-    If you are not redirected, <a href="./downloads.html">click here</a>.
-  </p>
+  <div id="app">
+    <div class="topbar">
+      <div>
+        <div class="title" id="title">Prayer Room</div>
+        <div class="subtitle" id="dateLabel"></div>
+      </div>
+      <div class="actions">
+        <button class="btn cream mini" id="changeNameBtn">Change Name</button>
+        <button class="btn cream mini" id="exportBtn">Export</button>
+        <label class="btn cream mini file">
+          Import
+          <input type="file" id="importFile" accept="application/json" />
+        </label>
+      </div>
+    </div>
+
+    <main class="wrap">
+      <!-- Scripture -->
+      <section class="card scripture">
+        <div class="cardHead">
+          <div class="cardTitle">Daily Scripture</div>
+          <div class="cardBtns">
+            <button class="btn mini" id="scrPrev">Prev</button>
+            <button class="btn mini" id="scrNext">Next</button>
+            <button class="btn mini" id="scrCopy">Copy</button>
+          </div>
+        </div>
+        <div class="cardBody">
+          <div class="bigText green" id="scriptureText"></div>
+        </div>
+      </section>
+
+      <!-- Center -->
+      <section class="center">
+        <!-- Daily List -->
+        <div class="pane">
+          <div class="paneHead greenHead">
+            <div class="paneTitle">Daily Prayer List</div>
+            <div class="paneBtns">
+              <button class="btn mini" id="saveList">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea id="dailyList" class="ta greenTa"></textarea>
+          </div>
+        </div>
+
+        <!-- Prayers -->
+        <div class="pane">
+          <div class="paneHead blueHead">
+            <div class="paneTitle">Prayers &amp; Petitions</div>
+            <div class="paneBtns">
+              <span class="dateLabel">
+                Date
+                <input type="date" id="prayerDate" />
+              </span>
+              <button class="btn mini" id="todayBtn">Today</button>
+              <button class="btn mini" id="savePrayer">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea id="prayerText" class="ta blueTa"></textarea>
+            <div class="status" id="status"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Doctrine -->
+      <section class="card doctrine">
+        <div class="cardHead doctrineHead">
+          <button class="btn outline mini" id="docPrev">Prev</button>
+          <div class="doctrineTitle" id="doctrineTitle"></div>
+          <button class="btn outline mini" id="docNext">Next</button>
+        </div>
+        <div class="cardBody doctrineBody">
+          <div class="bigText gold" id="doctrineText"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- IMPORTANT: absolute path -->
+  <script src="/app.js"></script>
 </body>
 </html>
