@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prayer Room</title>
 
-  <!-- GitHub Pages–safe relative paths -->
+  <!-- GitHub Pages safe paths -->
   <link rel="stylesheet" href="./styles.css" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./favicon.ico" />
@@ -13,6 +13,7 @@
 
 <body>
   <div id="app">
+
     <div class="topbar">
       <div>
         <div class="title" id="title">Prayer Room</div>
@@ -23,13 +24,13 @@
         <button class="btn cream mini" id="exportBtn">Export</button>
         <label class="btn cream mini file">
           Import
-          <input type="file" id="importFile" accept="application/json" />
+          <input type="file" id="importFile" accept="application/json">
         </label>
       </div>
     </div>
 
     <main class="wrap">
-      <!-- Scripture -->
+
       <section class="card scripture">
         <div class="cardHead">
           <div class="cardTitle">Daily Scripture</div>
@@ -45,6 +46,7 @@
       </section>
 
       <section class="center">
+
         <div class="pane">
           <div class="paneHead greenHead">
             <div class="paneTitle">Daily Prayer List</div>
@@ -62,7 +64,7 @@
           <div class="paneHead blueHead">
             <div class="paneTitle">Prayers & Petitions</div>
             <div class="paneBtns">
-              <input type="date" id="prayerDate" />
+              <input type="date" id="prayerDate">
               <button class="btn mini cream" id="todayBtn">Today</button>
               <button class="btn mini cream" id="savePrayer">Save</button>
             </div>
@@ -71,6 +73,7 @@
             <textarea class="ta blueTa" id="prayerText"></textarea>
           </div>
         </div>
+
       </section>
 
       <section class="card doctrine">
@@ -83,10 +86,10 @@
           <div class="bigText gold" id="doctrineText"></div>
         </div>
       </section>
+
     </main>
   </div>
 
-  <!-- GitHub Pages–safe relative path -->
   <script src="./app.js"></script>
 </body>
 </html>
