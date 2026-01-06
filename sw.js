@@ -1,37 +1,54 @@
-const CACHE_NAME = "prayer-room-pwa-v1";
-const CORE = ["./","./index.html","./styles.css","./app.js","./sw.js","./manifest.webmanifest"];
+/* Prayer Room Service Worker
+   Purpose: keep all clients in sync and prevent ghost versions
+*/
 
-self.addEventListener("install", (e) => {
-  e.waitUntil((async () => {
-    const c = await caches.open(CACHE_NAME);
-    await c.addAll(CORE);
-    self.skipWaiting();
-  })());
+const CACHE_NAME = "prayer-room-pwa-v2";
+const CORE = [
+  "./",
+  "./index.html",
+  "./app.html",
+  "./styles.css",
+  "./app.js",
+  "./manifest.webmanifest"
+];
+
+// Install: cache core files
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE))
+  );
 });
 
-self.addEventListener("activate", (e) => {
-  e.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.map(k => (k === CACHE_NAME ? null : caches.delete(k))));
-    self.clients.claim();
-  })());
+// Activate: remove all old caches
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+  self.clients.claim();
 });
 
-self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
-  e.respondWith((async () => {
-    const cached = await caches.match(e.request);
-    if (cached) return cached;
-    try {
-      const res = await fetch(e.request);
-      const url = new URL(e.request.url);
-      if (url.origin === self.location.origin) {
-        const c = await caches.open(CACHE_NAME);
-        c.put(e.request, res.clone());
-      }
-      return res;
-    } catch {
-      return (await caches.match("./index.html")) || new Response("Offline", { status: 503 });
-    }
-  })());
+// Fetch: network-first, cache fallback
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, copy);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
 });
