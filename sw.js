@@ -1,18 +1,20 @@
 /* Prayer Room Service Worker
-   Purpose: keep all clients in sync and prevent ghost versions
+   Purpose: keep all clients in sync and prevent stale UI
+   Scope: works correctly for /app deployment
 */
 
-const CACHE_NAME = "prayer-room-pwa-v2";
+const CACHE_NAME = "prayer-room-pwa-v3";
+
 const CORE = [
-  "./",
-  "./index.html",
-  "./app.html",
-  "./styles.css",
-  "./app.js",
-  "./manifest.webmanifest"
+  "/",
+  "/index.html",
+  "/app.html",
+  "/styles.css",
+  "/app.js",
+  "/manifest.webmanifest"
 ];
 
-// Install: cache core files
+// INSTALL: cache core assets and activate immediately
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
@@ -20,7 +22,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Activate: remove all old caches
+// ACTIVATE: delete ALL old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -36,13 +38,14 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Fetch: network-first, cache fallback
+// FETCH: network-first, cache fallback
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
     fetch(event.request)
       .then((response) => {
+        // Save a copy for offline use
         const copy = response.clone();
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, copy);
