@@ -1,49 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Prayer Room</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#0b0b0c;color:#f2f2f2}
-    .wrap{max-width:760px;margin:0 auto;padding:28px}
-    .card{background:#141416;border:1px solid #2a2a2e;border-radius:16px;padding:18px;margin:14px 0}
-    h1{margin:0 0 8px;font-size:26px}
-    p{margin:0 0 12px;color:#cfcfd6;line-height:1.35}
-    a.btn{display:block;text-decoration:none;background:#1f1f24;border:1px solid #353543;border-radius:14px;padding:14px 14px;color:#fff;margin:10px 0}
-    a.btn strong{display:block;font-size:16px;margin-bottom:4px}
-    a.btn span{display:block;color:#cfcfd6;font-size:13px}
-    .small{margin-top:10px;color:#a9a9b3;font-size:12px}
-  </style>
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./favicon.ico">
+
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Prayer Room</h1>
-      <p>Choose a version:</p>
 
-      <a class="btn" href="./app.html">
-        <strong>Use Web App (works right now)</strong>
-        <span>Opens in your browser.</span>
-      </a>
-
-      <a class="btn" href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/download/v1/PrayerRoom-Windows.zip">
-        <strong>Download for Windows</strong>
-        <span>Windows version</span>
-      </a>
-
-      <a class="btn" href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/download/v1/PrayerRoom-Mac.zip">
-        <strong>Download for macOS</strong>
-        <span>Mac version</span>
-      </a>
-
-      <a class="btn" href="https://testflight.apple.com/">
-        <strong>iPhone / iPad</strong>
-        <span>We can replace this link later.</span>
-      </a>
-
-      <div class="small">If it doesn’t change right away, refresh once.</div>
+  <header class="topbar">
+    <div>
+      <div class="title" id="title">Prayer Room</div>
+      <div class="subtitle" id="dateLabel"></div>
     </div>
-  </div>
+    <div class="actions">
+      <button class="btn cream" id="changeNameBtn">Change Name</button>
+      <button class="btn cream" id="exportBtn">Export</button>
+      <label class="file btn cream">
+        Import
+        <input type="file" id="importFile" accept=".json">
+      </label>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Scripture -->
+    <section class="card scripture">
+      <div class="cardHead">
+        <div class="cardTitle">Daily Scripture</div>
+        <div class="cardBtns">
+          <button class="btn mini" id="scrPrev">Prev</button>
+          <button class="btn mini" id="scrNext">Next</button>
+          <button class="btn mini" id="scrCopy">Copy</button>
+        </div>
+      </div>
+      <div class="cardBody">
+        <div class="bigText green" id="scriptureText"></div>
+      </div>
+    </section>
+
+    <!-- Center -->
+    <section class="center">
+
+      <!-- Daily List -->
+      <div class="pane">
+        <div class="paneHead greenHead">
+          <div class="paneTitle">Daily Prayer List</div>
+          <div class="paneBtns">
+            <button class="btn mini cream" id="saveList">Save</button>
+          </div>
+        </div>
+        <div class="paneBody">
+          <textarea class="ta greenTa" id="dailyList"></textarea>
+          <div class="status" id="status"></div>
+        </div>
+      </div>
+
+      <!-- Prayers -->
+      <div class="pane">
+        <div class="paneHead blueHead">
+          <div class="paneTitle">Prayers & Petitions</div>
+          <div class="paneBtns">
+            <input type="date" id="prayerDate">
+            <button class="btn mini cream" id="todayBtn">Today</button>
+            <button class="btn mini cream" id="savePrayer">Save</button>
+          </div>
+        </div>
+        <div class="paneBody">
+          <textarea class="ta blueTa" id="prayerText"></textarea>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Doctrine -->
+    <section class="card doctrine">
+      <div class="cardHead doctrineHead">
+        <button class="btn mini outline" id="docPrev">Prev</button>
+        <div class="doctrineTitle" id="doctrineTitle"></div>
+        <button class="btn mini outline" id="docNext">Next</button>
+      </div>
+      <div class="cardBody doctrineBody">
+        <div class="bigText gold" id="doctrineText"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="./app.js"></script>
 </body>
 </html>
