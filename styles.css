@@ -1,118 +1,50 @@
-/* =========================================================
-   Prayer Room — Bridge UI Styles
-   Safe full replacement
-   ========================================================= */
-
-/* ---- Base reset ---- */
-* {
-  box-sizing: border-box;
+:root{
+  --red:#b5121b; --bg:#f5f1e6; --ink:#102a43; --muted:#5b6b7a;
+  --cream:#fff2cc; --navy:#0b2d5c; --gold:#fff2cc;
+  --greenBg:#e8f5e9; --greenInk:#0b3d0b; --greenHead:#1f7a1f;
+  --blueHead:#243b8a; --blueBg:#e8f0ff;
+  --shadow:0 10px 25px rgba(0,0,0,.10); --border:rgba(0,0,0,.16);
 }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, Helvetica, Arial, sans-serif;
-  background: #f6f9fc;
-  color: #1a1a1a;
-}
-
-/* ---- Layout ---- */
-body {
-  display: flex;
-  justify-content: center;
-}
-
-main {
-  width: 100%;
-  max-width: 900px;
-  padding: 1.5rem;
-}
-
-/* ---- Header ---- */
-#title {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-#dateLabel {
-  color: #555;
-  margin-bottom: 1.5rem;
-}
-
-/* ---- Common panel styling ---- */
-.panel {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-}
-
-/* ---- Scripture & Doctrine panels ---- */
-#scriptureText,
-#doctrineText {
-  font-size: 1.05rem;
-  font-weight: 500;
-  line-height: 1.6;
-  max-height: 220px;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-}
-
-/* ---- Doctrine emphasis ---- */
-#doctrineTitle {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-/* ---- Textareas (prayer & daily list) ---- */
-textarea {
-  width: 100%;
-  min-height: 160px;
-  resize: vertical;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.6;
-  padding: 0.75rem;
-  border-radius: 8px;
-  border: 1px solid #cfd6df;
-  background: #ffffff;
-  color: #1a1a1a;
-}
-
-textarea:focus {
-  outline: none;
-  border-color: #5b9bd5;
-}
-
-/* ---- Buttons ---- */
-button {
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 0.45rem 0.75rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  background: #5b9bd5;
-  color: #ffffff;
-}
-
-button:hover {
-  background: #4a89c7;
-}
-
-/* ---- Status line ---- */
-#status {
-  margin-top: 0.75rem;
-  color: #2f6f2f;
-  font-size: 0.9rem;
-}
-
-/* ---- Footer / small notes ---- */
-.small-note {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 1rem;
-}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.topbar{background:var(--red);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.title{font-size:22px;font-weight:900}
+.subtitle{font-size:13px;font-weight:800;opacity:.95}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.wrap{max-width:1200px;margin:16px auto 28px;padding:0 14px;display:grid;gap:14px}
+.card{background:#fff;border:2px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.cardHead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px}
+.cardTitle{font-size:14px;font-weight:900}
+.cardBtns{display:flex;gap:8px;flex-wrap:wrap}
+.cardBody{padding:14px}
+.scripture .cardHead,.scripture .cardBody{background:var(--greenBg)}
+.center{display:grid;grid-template-columns:280px 1fr;gap:14px;min-height:420px}
+.pane{border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-height:420px;background:#fff}
+.paneHead{padding:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#fff;flex-wrap:wrap}
+.paneTitle{font-weight:900;font-size:14px}
+.paneBtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.greenHead{background:var(--greenHead)}
+.blueHead{background:var(--blueHead)}
+.paneBody{flex:1;padding:10px}
+.ta{width:100%;height:100%;resize:none;border-radius:12px;border:2px solid rgba(0,0,0,.18);padding:12px;font-size:16px;line-height:1.35;outline:none}
+.greenTa{background:#f4fff7}
+.blueTa{background:#f3f7ff}
+.bigText{font-size:18px;font-weight:900;line-height:1.28;text-align:center;text-wrap:pretty;hyphens:auto}
+.bigText.green{color:var(--greenInk)}
+.doctrine{border:3px solid rgba(241,196,15,.8);background:var(--navy)}
+.doctrineHead{background:var(--navy);border-bottom:2px solid rgba(255,255,255,.18)}
+.doctrineBody{background:var(--navy)}
+.doctrineTitle{flex:1;text-align:center;color:#fff;font-weight:900}
+.bigText.gold{color:var(--gold)}
+.status{color:var(--muted);font-size:12px;padding:4px 2px 0}
+.btn{border-radius:12px;padding:10px 12px;font-weight:900;font-size:13px;border:2px solid rgba(0,0,0,.25);background:#fff;color:var(--navy);cursor:pointer}
+.btn:hover{filter:brightness(.98)}
+.btn:active{transform:translateY(1px)}
+.btn.outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+.btn.cream{background:var(--cream)}
+.btn.mini{padding:8px 10px;font-size:12px}
+.file{position:relative;overflow:hidden}
+.file input{position:absolute;left:-10000px}
+.dateLabel{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:12px}
+.dateLabel input{border-radius:10px;border:2px solid rgba(255,255,255,.55);padding:6px 8px;font-weight:800}
+@media (max-width:980px){.center{grid-template-columns:1fr}.pane{min-height:320px}}
