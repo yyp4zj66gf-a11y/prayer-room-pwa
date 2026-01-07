@@ -1,0 +1,10 @@
+{
+  "name": "Prayer Room",
+  "short_name": "Prayer Room",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#b5121b",
+  "theme_color": "#b5121b",
+  "description": "Offline Prayer Room: prayer list, prayers by date, scripture & doctrine."
+}

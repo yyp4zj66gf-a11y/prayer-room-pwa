@@ -1,0 +1,2 @@
+// service worker disabled temporarily
+
