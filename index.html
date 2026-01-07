@@ -1,106 +1,142 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#b5121b" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Prayer Room</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prayer Room — Downloads</title>
+
+  <style>
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin:0;
+      background:#f6f7fb;
+      color:#111827;
+    }
+    .wrap{max-width:900px;margin:0 auto;padding:28px}
+    .card{
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      padding:18px;
+      margin:14px 0;
+      box-shadow:0 8px 30px rgba(17,24,39,0.06);
+    }
+    h1{margin:0 0 6px;font-size:30px}
+    h2{margin:0 0 10px;font-size:18px}
+    p{margin:0 0 12px;line-height:1.45;color:#374151}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    a.btn{
+      display:block;
+      text-decoration:none;
+      background:#111827;
+      color:#ffffff;
+      border-radius:14px;
+      padding:16px;
+    }
+    a.btn strong{display:block;font-size:16px;margin-bottom:4px}
+    a.btn span{display:block;font-size:13px;opacity:.9}
+    a.btn.light{
+      background:#ffffff;
+      color:#111827;
+      border:1px solid #d1d5db;
+    }
+    .pill{
+      display:inline-block;
+      background:#eef2ff;
+      border:1px solid #c7d2fe;
+      color:#3730a3;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    ol{margin:0;padding-left:18px;color:#374151}
+    li{margin:8px 0}
+    .note{font-size:12px;color:#6b7280}
+    code{
+      background:#f3f4f6;
+      padding:2px 6px;
+      border-radius:6px;
+      font-size:12px;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div>
-      <div class="title" id="title">Prayer Room</div>
-      <div class="subtitle" id="dateLabel"></div>
+  <div class="wrap">
+
+    <!-- MAIN -->
+    <div class="card">
+      <div class="pill">Welcome</div>
+      <h1>Prayer Room</h1>
+
+      <p>
+        Choose a version below.  
+        <strong>The Web App is recommended</strong> for Mac, iPhone, and iPad — no Apple warnings.
+      </p>
+
+      <div class="grid">
+
+        <!-- WEB APP -->
+        <a class="btn light" href="prayer-room.html" target="_blank">
+          <strong>Use Web App (Recommended)</strong>
+          <span>Works instantly on all devices.</span>
+        </a>
+
+        <!-- WINDOWS -->
+        <a class="btn"
+           href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Windows.zip">
+          <strong>Download for Windows (PC)</strong>
+          <span>Downloads the latest Windows version.</span>
+        </a>
+
+        <!-- MAC -->
+        <a class="btn"
+           href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Mac.zip">
+          <strong>Download for macOS</strong>
+          <span>Downloads the latest Mac version.</span>
+        </a>
+
+      </div>
+
+      <p class="note" style="margin-top:12px">
+        These buttons always download the <b>latest version</b> as long as the filenames stay:
+        <code>PrayerRoom-Windows.zip</code> and <code>PrayerRoom-Mac.zip</code>
+      </p>
     </div>
-    <div class="actions">
-      <button class="btn cream" id="changeNameBtn" type="button">Change Name</button>
-      <button class="btn outline" id="exportBtn" type="button">Export</button>
-      <label class="btn outline file">
-        Import
-        <input id="importFile" type="file" accept="application/json" />
-      </label>
+
+    <!-- MAC HELP -->
+    <div class="card">
+      <div class="pill">Mac users</div>
+      <h2>If Apple blocks the app</h2>
+
+      <ol>
+        <li>Download <b>PrayerRoom-Mac.zip</b></li>
+        <li>Double-click it to unzip</li>
+        <li>Drag <b>Prayer Room</b> into <b>Applications</b></li>
+        <li>Right-click the app → choose <b>Open</b></li>
+        <li>Click <b>Open</b> again when asked</li>
+      </ol>
+
+      <p class="note" style="margin-top:10px">
+        If needed: Apple menu → System Settings → Privacy & Security → <b>Open Anyway</b>
+      </p>
     </div>
-  </header>
 
-  <main class="wrap">
-    <section class="card scripture">
-      <div class="cardHead">
-        <div class="cardTitle">Daily Scripture</div>
-        <div class="cardBtns">
-          <button class="btn" id="scrPrev" type="button">Prev</button>
-          <button class="btn" id="scrNext" type="button">Next</button>
-          <button class="btn" id="scrCopy" type="button">Copy</button>
-        </div>
-      </div>
-      <div class="cardBody">
-        <div class="bigText green" id="scriptureText"></div>
-      </div>
-    </section>
+    <!-- INSTALL WEB APP -->
+    <div class="card">
+      <div class="pill">Optional</div>
+      <h2>Install the Web App</h2>
+      <ol>
+        <li><b>Mac:</b> Safari → Share → <b>Add to Dock</b></li>
+        <li><b>iPhone / iPad:</b> Safari → Share → <b>Add to Home Screen</b></li>
+      </ol>
+    </div>
 
-    <section class="center">
-      <section class="pane">
-        <div class="paneHead greenHead">
-          <div class="paneTitle">Daily Prayer List</div>
-          <div class="paneBtns">
-            <button class="btn mini" id="saveList" type="button">Save</button>
-          </div>
-        </div>
-        <div class="paneBody">
-          <textarea id="dailyList" class="ta greenTa" placeholder="Paste or type names here..."></textarea>
-        </div>
-      </section>
-
-      <section class="pane">
-        <div class="paneHead blueHead">
-          <div class="paneTitle">Prayers &amp; Petitions</div>
-          <div class="paneBtns">
-            <label class="dateLabel">
-              <span>Date</span>
-              <input id="prayerDate" type="date" />
-            </label>
-            <button class="btn mini" id="todayBtn" type="button">Today</button>
-            <button class="btn mini" id="savePrayer" type="button">Save</button>
-          </div>
-        </div>
-        <div class="paneBody">
-          <textarea id="prayerText" class="ta blueTa" placeholder="Write your prayers for the selected date..."></textarea>
-        </div>
-      </section>
-    </section>
-
-    <section class="card doctrine">
-      <div class="cardHead doctrineHead">
-        <button class="btn cream" id="docPrev" type="button">Prev</button>
-        <div class="doctrineTitle" id="doctrineTitle">Salvation Army Doctrine</div>
-        <button class="btn cream" id="docNext" type="button">Next</button>
-      </div>
-      <div class="cardBody doctrineBody">
-        <div class="bigText gold" id="doctrineText"></div>
-      </div>
-    </section>
-
-    <footer class="status" id="status"></footer>
-  </main>
-
-  <script src="./app.js"></script>
-<script>
-  (function () {
-    // Recovery mode: stop PWA caching so everyone sees fresh assets.
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistrations()
-        .then(regs => Promise.all(regs.map(r => r.unregister())))
-        .catch(() => {});
-    }
-    if (window.caches && caches.keys) {
-      caches.keys()
-        .then(keys => Promise.all(keys.map(k => caches.delete(k))))
-        .catch(() => {});
-    }
-  })();
-</script>
-
+  </div>
 </body>
 </html>
