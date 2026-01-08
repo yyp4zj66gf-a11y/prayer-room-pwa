@@ -3,98 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prayer Room — Downloads</title>
+  <title>Prayer Room — Start</title>
 
   <style>
+    :root{
+      --bg:#0b0f19;
+      --card:#0f172a;
+      --card2:#111827;
+      --text:#e5e7eb;
+      --muted:#a1a1aa;
+      --line:rgba(255,255,255,.10);
+      --btn:#ffffff;
+      --btnText:#0b0f19;
+      --btn2:#111827;
+      --btn2Text:#ffffff;
+      --pill:#1f2937;
+      --pillText:#cbd5e1;
+    }
     body{
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       margin:0;
-      background:#f6f7fb;
-      color:#111827;
+      background: radial-gradient(1200px 600px at 20% 0%, #18223f 0%, var(--bg) 55%);
+      color:var(--text);
     }
-    .wrap{max-width:900px;margin:0 auto;padding:28px}
+    .wrap{max-width:980px;margin:0 auto;padding:28px}
     .card{
-      background:#ffffff;
-      border:1px solid #e5e7eb;
+      background:linear-gradient(180deg,var(--card) 0%, var(--card2) 100%);
+      border:1px solid var(--line);
       border-radius:18px;
       padding:18px;
       margin:14px 0;
-      box-shadow:0 8px 30px rgba(17,24,39,0.06);
+      box-shadow:0 10px 40px rgba(0,0,0,.35);
     }
-    h1{margin:0 0 6px;font-size:30px}
-    h2{margin:0 0 10px;font-size:18px}
-    p{margin:0 0 12px;line-height:1.45;color:#374151}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:12px;
-    }
-    a.btn{
-      display:block;
-      text-decoration:none;
-      background:#111827;
-      color:#ffffff;
-      border-radius:14px;
-      padding:16px;
-    }
-    a.btn strong{display:block;font-size:16px;margin-bottom:4px}
-    a.btn span{display:block;font-size:13px;opacity:.9}
-    a.btn.light{
-      background:#ffffff;
-      color:#111827;
-      border:1px solid #d1d5db;
-    }
+    h1{margin:4px 0 6px;font-size:32px;letter-spacing:.2px}
+    h2{margin:0 0 10px;font-size:18px;color:#d1d5db}
+    p{margin:0 0 12px;line-height:1.5;color:#d1d5db}
     .pill{
       display:inline-block;
-      background:#eef2ff;
-      border:1px solid #c7d2fe;
-      color:#3730a3;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      color:var(--pillText);
       padding:4px 10px;
       border-radius:999px;
       font-size:12px;
       margin-bottom:10px;
     }
-    ol{margin:0;padding-left:18px;color:#374151}
-    li{margin:8px 0}
-    .note{font-size:12px;color:#6b7280}
-    code{
-      background:#f3f4f6;
-      padding:2px 6px;
-      border-radius:6px;
-      font-size:12px;
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:12px;
+      margin-top:12px;
     }
+    a.btn{
+      display:block;
+      text-decoration:none;
+      background:var(--btn2);
+      color:var(--btn2Text);
+      border-radius:14px;
+      padding:16px;
+      border:1px solid var(--line);
+      transition:transform .05s ease-in-out;
+    }
+    a.btn:active{transform:translateY(1px)}
+    a.btn.primary{
+      background:var(--btn);
+      color:var(--btnText);
+      border:0;
+    }
+    a.btn strong{display:block;font-size:16px;margin-bottom:4px}
+    a.btn span{display:block;font-size:13px;opacity:.92}
+    .note{font-size:12px;color:#9ca3af;margin-top:12px}
+    code{
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      padding:2px 6px;
+      border-radius:8px;
+      font-size:12px;
+      color:#e5e7eb;
+    }
+    ol{margin:0;padding-left:18px;color:#d1d5db}
+    li{margin:8px 0}
+    .small{font-size:12px;color:#9ca3af}
   </style>
 </head>
 
 <body>
   <div class="wrap">
 
-    <!-- MAIN -->
     <div class="card">
-      <div class="pill">Welcome</div>
+      <div class="pill">Start here</div>
       <h1>Prayer Room</h1>
 
       <p>
-        Choose a version below.  
-        <strong>The Web App is recommended</strong> for Mac, iPhone, and iPad — no Apple warnings.
+        Choose an option below.
+        <b>Desktop Web App</b> is the main “Use Web App” experience.
+        <b>iPhone/iPad</b> is a separate option with install help.
       </p>
 
       <div class="grid">
 
-        <!-- WEB APP -->
-        <a class="btn light" href="prayer-room.html" target="_blank">
-          <strong>Use Web App (Recommended)</strong>
-          <span>Works instantly on all devices.</span>
+        <!-- 1) DESKTOP WEB APP (THE ONE YOU EXPECT) -->
+        <a class="btn primary" href="./prayer-room.html">
+          <strong>Use Web App (Desktop / Mac / PC)</strong>
+          <span>Opens the main Prayer Room web app.</span>
         </a>
 
-        <!-- WINDOWS -->
+        <!-- 2) IPHONE / IPAD OPTION -->
+        <a class="btn" href="./iphone-ipad.html">
+          <strong>iPhone / iPad Version</strong>
+          <span>Install help + “Open Prayer Room” button.</span>
+        </a>
+
+        <!-- 3) WINDOWS DOWNLOAD -->
         <a class="btn"
            href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Windows.zip">
           <strong>Download for Windows (PC)</strong>
           <span>Downloads the latest Windows version.</span>
         </a>
 
-        <!-- MAC -->
+        <!-- 4) MAC DOWNLOAD -->
         <a class="btn"
            href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Mac.zip">
           <strong>Download for macOS</strong>
@@ -103,17 +130,15 @@
 
       </div>
 
-      <p class="note" style="margin-top:12px">
-        These buttons always download the <b>latest version</b> as long as the filenames stay:
+      <p class="note">
+        The two download buttons always fetch the <b>latest release</b> as long as these filenames stay:
         <code>PrayerRoom-Windows.zip</code> and <code>PrayerRoom-Mac.zip</code>
       </p>
     </div>
 
-    <!-- MAC HELP -->
     <div class="card">
       <div class="pill">Mac users</div>
       <h2>If Apple blocks the app</h2>
-
       <ol>
         <li>Download <b>PrayerRoom-Mac.zip</b></li>
         <li>Double-click it to unzip</li>
@@ -121,22 +146,12 @@
         <li>Right-click the app → choose <b>Open</b></li>
         <li>Click <b>Open</b> again when asked</li>
       </ol>
-
-      <p class="note" style="margin-top:10px">
-        If needed: Apple menu → System Settings → Privacy & Security → <b>Open Anyway</b>
+      <p class="small" style="margin-top:10px">
+        If needed: Apple menu → System Settings → Privacy &amp; Security → <b>Open Anyway</b>
       </p>
-    </div>
-
-    <!-- INSTALL WEB APP -->
-    <div class="card">
-      <div class="pill">Optional</div>
-      <h2>Install the Web App</h2>
-      <ol>
-        <li><b>Mac:</b> Safari → Share → <b>Add to Dock</b></li>
-        <li><b>iPhone / iPad:</b> Safari → Share → <b>Add to Home Screen</b></li>
-      </ol>
     </div>
 
   </div>
 </body>
 </html>
+

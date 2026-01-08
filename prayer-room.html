@@ -1,106 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#b5121b" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prayer Room</title>
+
+  <!-- NOTE: No manifest + no service worker on purpose (prevents “ghost caching” issues). -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
-  <header class="topbar">
-    <div>
-      <div class="title" id="title">Prayer Room</div>
-      <div class="subtitle" id="dateLabel"></div>
-    </div>
-    <div class="actions">
-      <button class="btn cream" id="changeNameBtn" type="button">Change Name</button>
-      <button class="btn outline" id="exportBtn" type="button">Export</button>
-      <label class="btn outline file">
-        Import
-        <input id="importFile" type="file" accept="application/json" />
-      </label>
-    </div>
-  </header>
+  <div id="app">
 
-  <main class="wrap">
-    <section class="card scripture">
-      <div class="cardHead">
-        <div class="cardTitle">Daily Scripture</div>
-        <div class="cardBtns">
-          <button class="btn" id="scrPrev" type="button">Prev</button>
-          <button class="btn" id="scrNext" type="button">Next</button>
-          <button class="btn" id="scrCopy" type="button">Copy</button>
-        </div>
+    <div class="topbar">
+      <div>
+        <div class="title" id="title">Prayer Room</div>
+        <div class="subtitle" id="dateLabel"></div>
       </div>
-      <div class="cardBody">
-        <div class="bigText green" id="scriptureText"></div>
+      <div class="actions">
+        <button class="btn cream mini" id="changeNameBtn">Change Name</button>
+        <button class="btn cream mini" id="exportBtn">Export</button>
+        <label class="btn cream mini file">
+          Import
+          <input type="file" id="importFile" accept="application/json" />
+        </label>
       </div>
-    </section>
+    </div>
 
-    <section class="center">
-      <section class="pane">
-        <div class="paneHead greenHead">
-          <div class="paneTitle">Daily Prayer List</div>
-          <div class="paneBtns">
-            <button class="btn mini" id="saveList" type="button">Save</button>
+    <main class="wrap">
+
+      <section class="card scripture">
+        <div class="cardHead">
+          <div class="cardTitle">Daily Scripture</div>
+          <div class="cardBtns">
+            <button class="btn mini" id="scrPrev">Prev</button>
+            <button class="btn mini" id="scrNext">Next</button>
+            <button class="btn mini" id="scrCopy">Copy</button>
           </div>
         </div>
-        <div class="paneBody">
-          <textarea id="dailyList" class="ta greenTa" placeholder="Paste or type names here..."></textarea>
+        <div class="cardBody">
+          <div class="bigText green" id="scriptureText"></div>
         </div>
       </section>
 
-      <section class="pane">
-        <div class="paneHead blueHead">
-          <div class="paneTitle">Prayers &amp; Petitions</div>
-          <div class="paneBtns">
-            <label class="dateLabel">
-              <span>Date</span>
-              <input id="prayerDate" type="date" />
-            </label>
-            <button class="btn mini" id="todayBtn" type="button">Today</button>
-            <button class="btn mini" id="savePrayer" type="button">Save</button>
+      <section class="center">
+
+        <div class="pane">
+          <div class="paneHead greenHead">
+            <div class="paneTitle">Daily Prayer List</div>
+            <div class="paneBtns">
+              <button class="btn mini cream" id="saveList">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea class="ta greenTa" id="dailyList" placeholder="Paste or type names here..."></textarea>
+            <div class="status" id="status"></div>
           </div>
         </div>
-        <div class="paneBody">
-          <textarea id="prayerText" class="ta blueTa" placeholder="Write your prayers for the selected date..."></textarea>
+
+        <div class="pane">
+          <div class="paneHead blueHead">
+            <div class="paneTitle">Prayers &amp; Petitions</div>
+            <div class="paneBtns">
+              <span class="dateLabel">
+                Date
+                <input type="date" id="prayerDate" />
+              </span>
+              <button class="btn mini cream" id="todayBtn">Today</button>
+              <button class="btn mini cream" id="savePrayer">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea class="ta blueTa" id="prayerText" placeholder="Write your prayers for the selected date..."></textarea>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card doctrine">
+        <div class="cardHead doctrineHead">
+          <button class="btn mini outline" id="docPrev">Prev</button>
+          <div class="doctrineTitle" id="doctrineTitle"></div>
+          <button class="btn mini outline" id="docNext">Next</button>
+        </div>
+        <div class="cardBody">
+          <div class="doctrineText" id="doctrineText"></div>
         </div>
       </section>
-    </section>
 
-    <section class="card doctrine">
-      <div class="cardHead doctrineHead">
-        <button class="btn cream" id="docPrev" type="button">Prev</button>
-        <div class="doctrineTitle" id="doctrineTitle">Salvation Army Doctrine</div>
-        <button class="btn cream" id="docNext" type="button">Next</button>
-      </div>
-      <div class="cardBody doctrineBody">
-        <div class="bigText gold" id="doctrineText"></div>
-      </div>
-    </section>
-
-    <footer class="status" id="status"></footer>
-  </main>
+    </main>
+  </div>
 
   <script src="./app.js"></script>
-<script>
-  (function () {
-    // Recovery mode: stop PWA caching so everyone sees fresh assets.
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistrations()
-        .then(regs => Promise.all(regs.map(r => r.unregister())))
-        .catch(() => {});
-    }
-    if (window.caches && caches.keys) {
-      caches.keys()
-        .then(keys => Promise.all(keys.map(k => caches.delete(k))))
-        .catch(() => {});
-    }
-  })();
-</script>
-
 </body>
 </html>
+
