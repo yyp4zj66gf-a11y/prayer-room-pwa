@@ -1,56 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrayerSpace – Prayer Room</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prayer Room</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="manifest" href="manifest.webmanifest" />
-</head>
-
-<body>
-  <div id="app">
-
-    <header id="top-header">
-      <div id="app-title">Prayer Room</div>
-      <div id="current-date"></div>
-    </header>
-
-    <section id="scripture-section">
-      <h2>Daily Scripture</h2>
-      <div id="scripture-box">
-        <div id="scripture-text"></div>
-        <div id="scripture-ref"></div>
-      </div>
-    </section>
-
-    <main id="main-body">
-
-      <section id="prayer-list-section">
-        <h3>Daily Prayer List</h3>
-        <div id="prayer-list" contenteditable="true" spellcheck="true"></div>
-      </section>
-
-      <section id="prayers-section">
-        <h3>Prayers &amp; Petitions</h3>
-        <div id="prayer-date-bar">
-          <input type="date" id="prayer-date" />
-          <button id="today-btn">Today</button>
+  <body>
+    <div id="app">
+      <header id="top-header">
+        <div id="app-title">Prayer Room</div>
+        <div id="top-date-controls">
+          <input id="prayer-date" type="date" />
+          <button id="today-btn" type="button">Today</button>
         </div>
-        <div id="prayers-text" contenteditable="true" spellcheck="true"></div>
+      </header>
+
+      <section id="scripture-section">
+        <h2>Daily Scripture</h2>
+        <div id="scripture-box" class="framed">
+          <div id="scripture-text"></div>
+          <div id="scripture-ref"></div>
+        </div>
       </section>
 
-    </main>
+      <main id="canvas">
+        <section id="prayer-list-section" class="framed">
+          <div class="ribbon ribbon-green">Daily Prayer List</div>
+          <div id="prayer-list" contenteditable="true" spellcheck="true" aria-label="Prayer list"></div>
+        </section>
 
-    <footer id="doctrine-section">
-      <div id="doctrine-title"></div>
-      <div id="doctrine-text"></div>
-    </footer>
+        <section id="prayers-section" class="framed">
+          <div class="ribbon ribbon-blue">Prayers &amp; Petitions</div>
 
-  </div>
+          <div id="prayer-split">
+            <section id="daily-prayer" class="framed">
+              <div class="ribbon ribbon-blue">Daily Prayer</div>
+              <div id="prayers-text" contenteditable="true" spellcheck="true" aria-label="Daily prayer"></div>
+            </section>
 
-  <script src="app.js"></script>
-</body>
+            <section id="daily-petitions" class="framed">
+              <div class="ribbon ribbon-grey">Daily Petitions</div>
+              <div id="petitions-text" contenteditable="true" spellcheck="true" aria-label="Daily petitions"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <footer id="doctrine-section">
+        <div id="doctrine-content">
+          <div id="doctrine-title"></div>
+          <div id="doctrine-text"></div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="name-modal" hidden>
+      <div id="name-modal-box">
+        <div style="font-weight: 700; margin-bottom: 6px">Welcome</div>
+        <div>Enter your name to personalize your Prayer Room</div>
+        <input id="name-input" type="text" autocomplete="name" />
+        <button id="save-name-btn" type="button">Save</button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>
 
