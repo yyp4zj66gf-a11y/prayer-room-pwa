@@ -1,50 +1,98 @@
-:root{
-  --red:#b5121b; --bg:#f5f1e6; --ink:#102a43; --muted:#5b6b7a;
-  --cream:#fff2cc; --navy:#0b2d5c; --gold:#fff2cc;
-  --greenBg:#e8f5e9; --greenInk:#0b3d0b; --greenHead:#1f7a1f;
-  --blueHead:#243b8a; --blueBg:#e8f0ff;
-  --shadow:0 10px 25px rgba(0,0,0,.10); --border:rgba(0,0,0,.16);
+:root {
+  --cream-bg: #F4F1E6;
+  --header-red: #B5121B;
+  --scripture-green: #DFF3E6;
+  --list-header-green: #1F7A1F;
+  --list-bg: #F4FEF7;
+  --prayers-header-blue: #243E8F;
+  --prayers-bg: #F2F7FF;
+  --doctrine-navy: #0B2A4A;
+  --doctrine-gold: #F2C200;
 }
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-.topbar{background:var(--red);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.title{font-size:22px;font-weight:900}
-.subtitle{font-size:13px;font-weight:800;opacity:.95}
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.wrap{max-width:1200px;margin:16px auto 28px;padding:0 14px;display:grid;gap:14px}
-.card{background:#fff;border:2px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.cardHead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px}
-.cardTitle{font-size:14px;font-weight:900}
-.cardBtns{display:flex;gap:8px;flex-wrap:wrap}
-.cardBody{padding:14px}
-.scripture .cardHead,.scripture .cardBody{background:var(--greenBg)}
-.center{display:grid;grid-template-columns:280px 1fr;gap:14px;min-height:420px}
-.pane{border-radius:14px;border:2px solid var(--border);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-height:420px;background:#fff}
-.paneHead{padding:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:#fff;flex-wrap:wrap}
-.paneTitle{font-weight:900;font-size:14px}
-.paneBtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.greenHead{background:var(--greenHead)}
-.blueHead{background:var(--blueHead)}
-.paneBody{flex:1;padding:10px}
-.ta{width:100%;height:100%;resize:none;border-radius:12px;border:2px solid rgba(0,0,0,.18);padding:12px;font-size:16px;line-height:1.35;outline:none}
-.greenTa{background:#f4fff7}
-.blueTa{background:#f3f7ff}
-.bigText{font-size:18px;font-weight:900;line-height:1.28;text-align:center;text-wrap:pretty;hyphens:auto}
-.bigText.green{color:var(--greenInk)}
-.doctrine{border:3px solid rgba(241,196,15,.8);background:var(--navy)}
-.doctrineHead{background:var(--navy);border-bottom:2px solid rgba(255,255,255,.18)}
-.doctrineBody{background:var(--navy)}
-.doctrineTitle{flex:1;text-align:center;color:#fff;font-weight:900}
-.bigText.gold{color:var(--gold)}
-.status{color:var(--muted);font-size:12px;padding:4px 2px 0}
-.btn{border-radius:12px;padding:10px 12px;font-weight:900;font-size:13px;border:2px solid rgba(0,0,0,.25);background:#fff;color:var(--navy);cursor:pointer}
-.btn:hover{filter:brightness(.98)}
-.btn:active{transform:translateY(1px)}
-.btn.outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
-.btn.cream{background:var(--cream)}
-.btn.mini{padding:8px 10px;font-size:12px}
-.file{position:relative;overflow:hidden}
-.file input{position:absolute;left:-10000px}
-.dateLabel{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:12px}
-.dateLabel input{border-radius:10px;border:2px solid rgba(255,255,255,.55);padding:6px 8px;font-weight:800}
-@media (max-width:980px){.center{grid-template-columns:1fr}.pane{min-height:320px}}
+
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--cream-bg);
+}
+
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#top-header {
+  background: var(--header-red);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-weight: 600;
+}
+
+#scripture-section {
+  padding: 12px;
+}
+
+#scripture-box {
+  background: var(--scripture-green);
+  padding: 16px;
+}
+
+#main-body {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+}
+
+#prayer-list-section {
+  width: 30%;
+  background: var(--list-bg);
+}
+
+#prayer-list-section h3 {
+  background: var(--list-header-green);
+  color: #fff;
+  margin: 0;
+  padding: 8px;
+}
+
+#prayer-list {
+  min-height: 300px;
+  padding: 8px;
+}
+
+#prayers-section {
+  width: 70%;
+  background: var(--prayers-bg);
+}
+
+#prayers-section h3 {
+  background: var(--prayers-header-blue);
+  color: #fff;
+  margin: 0;
+  padding: 8px;
+}
+
+#prayer-date-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+
+#prayers-text {
+  min-height: 300px;
+  padding: 8px;
+}
+
+#doctrine-section {
+  background: var(--doctrine-navy);
+  color: #fff;
+  border-top: 4px solid var(--doctrine-gold);
+  padding: 16px;
+}
+

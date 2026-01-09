@@ -1,157 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prayer Room — Start</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrayerSpace – Prayer Room</title>
 
-  <style>
-    :root{
-      --bg:#0b0f19;
-      --card:#0f172a;
-      --card2:#111827;
-      --text:#e5e7eb;
-      --muted:#a1a1aa;
-      --line:rgba(255,255,255,.10);
-      --btn:#ffffff;
-      --btnText:#0b0f19;
-      --btn2:#111827;
-      --btn2Text:#ffffff;
-      --pill:#1f2937;
-      --pillText:#cbd5e1;
-    }
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      margin:0;
-      background: radial-gradient(1200px 600px at 20% 0%, #18223f 0%, var(--bg) 55%);
-      color:var(--text);
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:28px}
-    .card{
-      background:linear-gradient(180deg,var(--card) 0%, var(--card2) 100%);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:18px;
-      margin:14px 0;
-      box-shadow:0 10px 40px rgba(0,0,0,.35);
-    }
-    h1{margin:4px 0 6px;font-size:32px;letter-spacing:.2px}
-    h2{margin:0 0 10px;font-size:18px;color:#d1d5db}
-    p{margin:0 0 12px;line-height:1.5;color:#d1d5db}
-    .pill{
-      display:inline-block;
-      background:rgba(255,255,255,.08);
-      border:1px solid var(--line);
-      color:var(--pillText);
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      margin-bottom:10px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-    a.btn{
-      display:block;
-      text-decoration:none;
-      background:var(--btn2);
-      color:var(--btn2Text);
-      border-radius:14px;
-      padding:16px;
-      border:1px solid var(--line);
-      transition:transform .05s ease-in-out;
-    }
-    a.btn:active{transform:translateY(1px)}
-    a.btn.primary{
-      background:var(--btn);
-      color:var(--btnText);
-      border:0;
-    }
-    a.btn strong{display:block;font-size:16px;margin-bottom:4px}
-    a.btn span{display:block;font-size:13px;opacity:.92}
-    .note{font-size:12px;color:#9ca3af;margin-top:12px}
-    code{
-      background:rgba(255,255,255,.08);
-      border:1px solid var(--line);
-      padding:2px 6px;
-      border-radius:8px;
-      font-size:12px;
-      color:#e5e7eb;
-    }
-    ol{margin:0;padding-left:18px;color:#d1d5db}
-    li{margin:8px 0}
-    .small{font-size:12px;color:#9ca3af}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
 </head>
 
 <body>
-  <div class="wrap">
+  <div id="app">
 
-    <div class="card">
-      <div class="pill">Start here</div>
-      <h1>Prayer Room</h1>
+    <header id="top-header">
+      <div id="app-title">Prayer Room</div>
+      <div id="current-date"></div>
+    </header>
 
-      <p>
-        Choose an option below.
-        <b>Desktop Web App</b> is the main “Use Web App” experience.
-        <b>iPhone/iPad</b> is a separate option with install help.
-      </p>
-
-      <div class="grid">
-
-        <!-- 1) DESKTOP WEB APP (THE ONE YOU EXPECT) -->
-        <a class="btn primary" href="./prayer-room.html">
-          <strong>Use Web App (Desktop / Mac / PC)</strong>
-          <span>Opens the main Prayer Room web app.</span>
-        </a>
-
-        <!-- 2) IPHONE / IPAD OPTION -->
-        <a class="btn" href="./iphone-ipad.html">
-          <strong>iPhone / iPad Version</strong>
-          <span>Install help + “Open Prayer Room” button.</span>
-        </a>
-
-        <!-- 3) WINDOWS DOWNLOAD -->
-        <a class="btn"
-           href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Windows.zip">
-          <strong>Download for Windows (PC)</strong>
-          <span>Downloads the latest Windows version.</span>
-        </a>
-
-        <!-- 4) MAC DOWNLOAD -->
-        <a class="btn"
-           href="https://github.com/yyp4zj66gf-a11y/prayer-room-build/releases/latest/download/PrayerRoom-Mac.zip">
-          <strong>Download for macOS</strong>
-          <span>Downloads the latest Mac version.</span>
-        </a>
-
+    <section id="scripture-section">
+      <h2>Daily Scripture</h2>
+      <div id="scripture-box">
+        <div id="scripture-text"></div>
+        <div id="scripture-ref"></div>
       </div>
+    </section>
 
-      <p class="note">
-        The two download buttons always fetch the <b>latest release</b> as long as these filenames stay:
-        <code>PrayerRoom-Windows.zip</code> and <code>PrayerRoom-Mac.zip</code>
-      </p>
-    </div>
+    <main id="main-body">
 
-    <div class="card">
-      <div class="pill">Mac users</div>
-      <h2>If Apple blocks the app</h2>
-      <ol>
-        <li>Download <b>PrayerRoom-Mac.zip</b></li>
-        <li>Double-click it to unzip</li>
-        <li>Drag <b>Prayer Room</b> into <b>Applications</b></li>
-        <li>Right-click the app → choose <b>Open</b></li>
-        <li>Click <b>Open</b> again when asked</li>
-      </ol>
-      <p class="small" style="margin-top:10px">
-        If needed: Apple menu → System Settings → Privacy &amp; Security → <b>Open Anyway</b>
-      </p>
-    </div>
+      <section id="prayer-list-section">
+        <h3>Daily Prayer List</h3>
+        <div id="prayer-list" contenteditable="true" spellcheck="true"></div>
+      </section>
+
+      <section id="prayers-section">
+        <h3>Prayers &amp; Petitions</h3>
+        <div id="prayer-date-bar">
+          <input type="date" id="prayer-date" />
+          <button id="today-btn">Today</button>
+        </div>
+        <div id="prayers-text" contenteditable="true" spellcheck="true"></div>
+      </section>
+
+    </main>
+
+    <footer id="doctrine-section">
+      <div id="doctrine-title"></div>
+      <div id="doctrine-text"></div>
+    </footer>
 
   </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
 
