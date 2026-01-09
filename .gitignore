@@ -1,0 +1,5 @@
+*.BACKUP
+*.bak.*
+freeze-*.zip
+freeze-*/
+
