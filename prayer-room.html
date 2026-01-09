@@ -1,140 +1,92 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Prayer Room</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prayer Room</title>
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
 
-<style>
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f2e8}
-.topbar{background:#b30000;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.title{font-size:20px;font-weight:bold}
-.datebar{background:#efe9d6;padding:8px 16px}
-.main{display:flex;gap:10px;padding:10px}
-.left{width:260px;background:#e6f3e6;border:2px solid #2d7a2d;padding:6px;display:flex;flex-direction:column}
-.right{flex:1;display:flex;flex-direction:column;gap:8px}
-textarea{width:100%;box-sizing:border-box}
-.saveBtn{margin-top:6px}
-.scripture{background:#fff;border:2px solid #444;padding:8px}
-.doctrine{background:#003366;color:#ffd100;padding:10px;text-align:center}
-.praise{flex:2;background:#eef4ff;border:2px solid #1f3f99;padding:6px;display:flex;flex-direction:column}
-.petitions{flex:1;background:#f9eaea;border:2px solid #992222;padding:6px;display:flex;flex-direction:column}
-h3{margin:0 0 4px 0}
-</style>
-</head>
+  <body>
+    <div id="app">
+      <header id="top-header">
+        <div id="app-title">Prayer Room</div>
+        <div id="top-date-controls">
+          <span style="margin-right:8px;">Date:</span>
+          <input id="prayer-date" type="date" />
+          <button id="today-btn" type="button">Today</button>
+        </div>
+      </header>
 
-<body>
+      <section id="scripture-section">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h2 style="margin: 10px 0;">Daily Scripture</h2>
+          <button id="prev-btn" type="button">Prev</button>
+          <button id="next-btn" type="button">Next</button>
+          <button id="copy-btn" type="button">Copy</button>
+        </div>
 
-<div class="topbar">
-  <div class="title" id="title">Prayer Room</div>
-  <div>
-    Date:
-    <input type="date" id="datePicker">
-  </div>
-</div>
+        <div id="scripture-box" class="framed" style="min-height:44px;">
+          <div id="scripture-text"></div>
+          <div id="scripture-ref" style="margin-top:6px; font-style:italic;"></div>
+        </div>
+      </section>
 
-<div class="datebar">
-  <b>Daily Scripture</b>
-  <button id="scrPrev">Prev</button>
-  <button id="scrNext">Next</button>
-  <button id="scrCopy">Copy</button>
-  <span id="scriptureText"></span>
-</div>
+      <main id="canvas">
+        <section id="prayer-list-section" class="framed">
+          <div class="ribbon ribbon-green">Daily Prayer List</div>
+          <textarea
+            id="prayer-list"
+            style="width:100%; height:100%; resize:none; border:0; outline:0; padding:10px; background:transparent;"
+            spellcheck="true"
+          ></textarea>
+        </section>
 
-<div class="main">
+        <section id="prayers-section" class="framed">
+          <div id="prayer-split">
+            <section id="daily-prayer" class="framed">
+              <div class="ribbon ribbon-blue">Daily Prayer of Praise</div>
+              <textarea
+                id="prayers-text"
+                style="width:100%; height:100%; resize:none; border:0; outline:0; padding:10px; background:transparent;"
+                spellcheck="true"
+              ></textarea>
+            </section>
 
-  <div class="left">
-    <b>Daily Prayer List</b>
-    <textarea id="prayerList" rows="18"></textarea>
-  </div>
+            <section id="daily-petitions" class="framed">
+              <div class="ribbon ribbon-grey">Daily Petitions</div>
+              <textarea
+                id="petitions-text"
+                style="width:100%; height:100%; resize:none; border:0; outline:0; padding:10px; background:transparent;"
+                spellcheck="true"
+              ></textarea>
 
-  <div class="right">
+              <div style="display:flex; justify-content:center; padding:10px 0;">
+                <button id="save-btn" type="button">Save</button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
 
-    <div class="praise">
-      <h3>Daily Prayer of Praise</h3>
-      <textarea id="praiseBox" rows="12"></textarea>
+      <footer id="doctrine-section">
+        <div id="doctrine-content">
+          <div id="doctrine-title" style="font-weight:800; margin-bottom:6px;"></div>
+          <div id="doctrine-text"></div>
+        </div>
+      </footer>
     </div>
 
-    <div class="petitions">
-      <h3>Daily Petitions</h3>
-      <textarea id="petitionBox" rows="6"></textarea>
-      <button class="saveBtn" onclick="saveDaily()">Save</button>
+    <div id="name-modal" hidden>
+      <div id="name-modal-box">
+        <div style="font-weight: 700; margin-bottom: 6px">Welcome</div>
+        <div>Enter your name to personalize your Prayer Room</div>
+        <input id="name-input" type="text" autocomplete="name" />
+        <button id="save-name-btn" type="button">Save</button>
+      </div>
     </div>
 
-  </div>
-</div>
-
-<div class="doctrine">
-  <span id="doctrineTitle">Salvation Army Doctrine</span>
-</div>
-
-<script>
-/* ========= INDEXEDDB ========= */
-const DB="PrayerRoomDB"; let db;
-const openDB=()=>new Promise(res=>{
-  const r=indexedDB.open(DB,1);
-  r.onupgradeneeded=e=>{
-    db=e.target.result;
-    db.createObjectStore("list",{keyPath:"key"});
-    db.createObjectStore("daily",{keyPath:"date"});
-    db.createObjectStore("user",{keyPath:"key"});
-  };
-  r.onsuccess=e=>{db=e.target.result;res();}
-});
-
-const tx=(s,m="readonly")=>db.transaction(s,m).objectStore(s);
-
-/* ========= USER ========= */
-async function initUser(){
-  const r=tx("user").get("name");
-  r.onsuccess=()=>{
-    if(!r.result){
-      const n=prompt("Enter your first name:");
-      if(n){tx("user","readwrite").put({key:"name",value:n});title.textContent=n+"'s Prayer Room";}
-    }else title.textContent=r.result.value+"'s Prayer Room";
-  };
-}
-
-/* ========= PRAYER LIST (AUTO PERSIST) ========= */
-function loadList(){
-  const r=tx("list").get("main");
-  r.onsuccess=()=>prayerList.value=r.result?.text||"";
-}
-prayerList.oninput=()=>tx("list","readwrite").put({key:"main",text:prayerList.value});
-
-/* ========= DAILY PRAYERS ========= */
-function dateKey(){return datePicker.value;}
-
-function loadDaily(){
-  const r=tx("daily").get(dateKey());
-  r.onsuccess=()=>{
-    praiseBox.value=r.result?.praise||"";
-    petitionBox.value=r.result?.petitions||"";
-  };
-}
-
-function saveDaily(){
-  tx("daily","readwrite").put({
-    date:dateKey(),
-    praise:praiseBox.value,
-    petitions:petitionBox.value
-  });
-}
-
-/* ========= INIT ========= */
-(async()=>{
-  await openDB();
-  initUser();
-
-  datePicker.value=new Date().toISOString().slice(0,10);
-  loadList();
-  loadDaily();
-
-  datePicker.onchange=()=>{saveDaily();loadDaily();};
-  window.addEventListener("beforeunload",saveDaily);
-})();
-</script>
-
-</body>
+    <script src="app.js?v=60dfcc0"></script>
+  </body>
 </html>
 
