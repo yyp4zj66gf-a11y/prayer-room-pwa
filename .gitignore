@@ -3,3 +3,5 @@
 freeze-*.zip
 freeze-*/
 
+
+*.bak
