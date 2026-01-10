@@ -1,88 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Prayer Room — Start</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: #f6f6f6;
-      color: #222;
       margin: 0;
-      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #0b1b34;
+      color: #ffffff;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
     }
-    .container {
-      background: #ffffff;
+
+    .card {
+      background: #13284f;
+      padding: 40px;
+      border-radius: 14px;
+      width: 100%;
       max-width: 520px;
-      width: 90%;
-      padding: 32px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
     }
+
     h1 {
       margin-top: 0;
-      font-weight: 500;
-      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      font-size: 28px;
+      text-align: center;
     }
+
     p {
-      color: #555;
-      line-height: 1.5;
+      text-align: center;
+      opacity: 0.9;
+      margin-bottom: 30px;
     }
-    .buttons {
-      margin-top: 28px;
-      display: grid;
-      gap: 14px;
-    }
+
     a.button {
       display: block;
-      padding: 14px;
       text-decoration: none;
-      border: 1px solid #ccc;
-      color: #222;
-      background: #fafafa;
+      background: #ffffff;
+      color: #0b1b34;
+      padding: 16px 18px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      text-align: center;
+      font-weight: 600;
       transition: background 0.15s ease;
     }
+
     a.button:hover {
-      background: #eee;
+      background: #e6e6e6;
     }
+
     .note {
-      margin-top: 24px;
-      font-size: 0.9em;
-      color: #777;
+      margin-top: 18px;
+      font-size: 13px;
+      text-align: center;
+      opacity: 0.75;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="card">
     <h1>Prayer Room — Start</h1>
+    <p>Enter the Prayer Room or download the app for your device.</p>
 
-    <p>
-      Enter the Prayer Room or download the app for your device.
-    </p>
+    <a class="button" href="prayer-room.html">
+      Use Web App (Desktop / Mac / PC)
+    </a>
 
-    <div class="buttons">
-      <a class="button" href="web/">
-        Use Web App (Desktop / Mac / PC)
-      </a>
+    <a class="button" href="iphone-ipad.html">
+      iPhone / iPad Version
+    </a>
 
-      <a class="button" href="mobile.html">
-        iPhone / iPad Version
-      </a>
+    <a class="button" href="downloads/PrayerRoom-Windows.zip">
+      Download for Windows (PC)
+    </a>
 
-      <a class="button" href="downloads/PrayerRoom-Windows.zip">
-        Download for Windows (PC)
-      </a>
-
-      <a class="button" href="downloads/PrayerRoom-Mac.zip">
-        Download for macOS
-      </a>
-    </div>
+    <a class="button" href="downloads/PrayerRoom-Mac.zip">
+      Download for macOS
+    </a>
 
     <div class="note">
       The desktop app provides the full Prayer Room experience.
