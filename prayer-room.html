@@ -1,229 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Prayer Room – Layout Preview (v3.4)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<style>
-:root{
-  --bg-main:#f6f3e9;
-  --red-header:#b5121b;
-  --green-scripture:#2f5d3a;
-
-  --green-banner:#1f7a2e;
-  --blue-banner:#243b8a;
-  --salmon-banner:#b24a3a;
-
-  --pastel-green:#eef6ee;
-  --pastel-blue:#eef2fb;
-  --salmon:#f3c1b3;
-
-  --blue-deep:#0b2d5c;
-  --gold:#c9a33b;
-  --border:#444;
-}
-
-*{box-sizing:border-box;}
-
-html, body{
-  height:100%;
-  margin:0;
-}
-
-body{
-  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  background:var(--bg-main);
-  overflow:hidden;
-}
-
-/* ===== WIDTH BEHAVIOR (FIXED) ===== */
-.wrap{
-  width:100%;
-  padding:0 3vw;
-  height:100vh;
-}
-
-/* ===== APP GRID ===== */
-.app{
-  display:grid;
-  grid-template-rows:auto auto 1fr auto;
-  height:100%;
-  min-height:0;
-}
-
-/* ===== HEADER ===== */
-.header{
-  background:var(--red-header);
-  color:#fff;
-  padding:16px 22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.header h1{margin:0;font-size:22px;font-weight:700;}
-
-/* ===== SCRIPTURE ===== */
-.scripture{
-  margin:16px;
-  background:var(--green-scripture);
-  color:#e9f5ec;
-  padding:34px 40px;
-  border-radius:4px;
-  font-size:19px;
-  font-weight:600;
-  line-height:1.7;
-  text-align:center;
-}
-
-/* ===== CENTER ===== */
-.center{
-  display:grid;
-  grid-template-columns:1fr 2fr;
-  gap:18px;
-  padding:0 16px 16px;
-  min-height:0;
-}
-
-/* ===== PANEL BASE ===== */
-.panel{
-  border:2px solid var(--border);
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-}
-.banner{
-  padding:11px 16px;
-  font-weight:700;
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.banner.green{background:var(--green-banner);}
-.banner.blue{background:var(--blue-banner);}
-.banner.salmon{background:var(--salmon-banner);}
-
-.content{
-  padding:16px;
-  overflow-y:scroll;   /* FORCE SCROLL */
-  flex:1;
-  min-height:0;
-}
-
-/* ===== LEFT ===== */
-.prayer-list .content{
-  background:var(--pastel-green);
-}
-
-/* ===== RIGHT SPLIT ===== */
-.right{
-  display:grid;
-  grid-template-rows:2fr 1fr;
-  gap:18px;
-  min-height:0;
-}
-
-.daily-prayer .content{
-  background:var(--pastel-blue);
-}
-
-.petitions{
-  border-color:#a94436;
-}
-.petitions .content{
-  background:var(--salmon);
-}
-
-/* ===== DATE SELECT ===== */
-.date-controls select{
-  padding:4px 6px;
-  font-size:13px;
-}
-
-/* ===== DOCTRINE ===== */
-.doctrine-outer{
-  margin:0 16px 16px;
-  border:5px solid var(--gold);
-  padding:5px;
-}
-.doctrine{
-  background:var(--blue-deep);
-  color:#fff;
-  padding:24px 30px;
-  text-align:center;
-  font-weight:700;   /* BOLD */
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Lorne’s Prayer Room</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial;
+      background: #f6f3e9;
+    }
+    header {
+      background: #b5121b;
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .scripture {
+      background: #2f5f3a;
+      color: white;
+      margin: 20px;
+      padding: 20px;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 6px;
+    }
+  </style>
 </head>
-
 <body>
-<div class="wrap">
-<div class="app">
 
-<div class="header">
-  <h1>Lorne’s Prayer Room</h1>
-  <div>January 9, 2026</div>
-</div>
+<header>
+  <div>Lorne’s Prayer Room</div>
+  <div id="today-date"></div>
+</header>
 
 <div class="scripture">
-  1 John 3:1 — Behold, what manner of love the Father hath bestowed upon us,
-  that we should be called the sons of God.
+  <div id="scripture-text">Loading Scripture…</div>
 </div>
 
-<div class="center">
+<script>
+  document.getElementById("today-date").textContent =
+    new Date().toLocaleDateString();
+</script>
 
-<div class="panel prayer-list">
-  <div class="banner green">Daily Prayer List</div>
-  <div class="content">
-    • Item<br><br>• Item<br><br>• Item<br><br>• Item<br><br>
-    • Item<br><br>• Item<br><br>• Item<br><br>• Item<br><br>
-    • Item<br><br>• Item<br><br>• Item<br><br>• Item<br><br>
-    • Item<br><br>• Item<br><br>(Scroll visibly forced)
-  </div>
-</div>
+<script src="app.js"></script>
 
-<div class="right">
-
-<div class="panel daily-prayer">
-  <div class="banner blue">
-    <span>Daily Prayer</span>
-    <div class="date-controls">
-      <select>
-        <option>2026-01-09</option>
-        <option>2026-01-08</option>
-        <option>2026-01-07</option>
-      </select>
-    </div>
-  </div>
-  <div class="content">
-    Prayer…<br><br>Prayer…<br><br>Prayer…<br><br>
-    Prayer…<br><br>Prayer…<br><br>Prayer…<br><br>
-    Prayer…<br><br>Prayer…<br><br>Prayer…<br><br>
-    Prayer…<br><br>(Scrollbar must show)
-  </div>
-</div>
-
-<div class="panel petitions">
-  <div class="banner salmon">Daily Petitions</div>
-  <div class="content">
-    Petition…<br><br>Petition…<br><br>Petition…<br><br>
-    Petition…<br><br>Petition…<br><br>
-  </div>
-</div>
-
-</div>
-</div>
-
-<div class="doctrine-outer">
-  <div class="doctrine">
-    Doctrine #8<br><br>
-    We believe that we are justified by grace through faith in our Lord Jesus Christ.
-  </div>
-</div>
-
-</div>
-</div>
 </body>
 </html>
 
