@@ -1,0 +1,25 @@
+{
+  "rotation": [
+    "GOD_THE_FATHER",
+    "CHRIST_THE_SON",
+    "HOLY_SPIRIT",
+    "SALVATION",
+    "HOLINESS",
+    "CHURCH",
+    "SCRIPTURE",
+    "KINGDOM_OF_GOD",
+    "SECOND_COMING",
+    "ETERNITY",
+    "MISSION"
+  ],
+
+  "special_days": {
+    "12-25": { "doctrine": "CHRIST_THE_SON", "tag": "CHRISTMAS" },
+    "04-05": { "doctrine": "CHRIST_THE_SON", "tag": "EASTER" },
+    "05-19": { "doctrine": "HOLY_SPIRIT", "tag": "PENTECOST" }
+  },
+
+  "start_date": "2025-01-01",
+  "length_days": 730
+}
+
