@@ -1,29 +1,19 @@
-(function () {
-  "use strict";
+// render.js — dumb renderer, no logic
 
-  document.addEventListener("PrayerRoomPayloadReady", () => {
-    const p = window.PRAYER_ROOM_PAYLOAD;
-    if (!p) return;
+(async function () {
+  const payload = await window.loadPayload();
 
-    document.querySelector("[data-bind='date']").textContent = p.date;
+  document.querySelectorAll("[data-bind]").forEach(el => {
+    const key = el.getAttribute("data-bind");
 
-    document.querySelector("[data-bind='scripture']").innerHTML =
-      `<strong>${p.scripture.ref}</strong><br><br>${p.scripture.text}`;
-
-    document.querySelector("[data-bind='doctrine']").innerHTML =
-      `<strong>Doctrine #${p.doctrine.index}</strong><br><br>${p.doctrine.text}`;
-
-    const pl = document.querySelector("[data-bind='prayer-list']");
-    const dp = document.querySelector("[data-bind='daily-prayer']");
-    const pe = document.querySelector("[data-bind='daily-petitions']");
-
-    pl.value = p.userContent.prayerList;
-    dp.value = p.userContent.dailyPrayer;
-    pe.value = p.userContent.dailyPetitions;
-
-    pl.oninput = () => localStorage.setItem("prayer_list", pl.value);
-    dp.oninput = () => localStorage.setItem("daily_prayer", dp.value);
-    pe.oninput = () => localStorage.setItem("daily_petitions", pe.value);
+    if (el.tagName === "TEXTAREA") {
+      el.value = payload[key] || "";
+      el.addEventListener("input", () => {
+        localStorage.setItem(key, el.value);
+      });
+    } else {
+      el.textContent = payload[key] || "";
+    }
   });
 })();
 
