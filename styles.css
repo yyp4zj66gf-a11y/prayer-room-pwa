@@ -1,299 +1,179 @@
-"use strict";
+/* =========================
+   Prayer Room — Core Layout
+   ========================= */
 
-/**
- * /app.js
- * Stable, deterministic: no missing-element crashes, no infinite loading.
- * Data model: localStorage only.
- */
-
-function todayISO() {
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
+:root {
+  --bg-main: #f7f3e9;
+  --panel-bg: #ffffff;
+  --frame: #d9cfae;
+  --text: #222;
+  --red: #c8102e;
+  --blue: #003a8f;
+  --green: #1f7a4d;
+  --yellow: #ffd100;
 }
 
-function parseISO(iso) {
-  const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d);
+* {
+  box-sizing: border-box;
 }
 
-function toISO(dt) {
-  const y = dt.getFullYear();
-  const m = String(dt.getMonth() + 1).padStart(2, "0");
-  const d = String(dt.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg-main);
+  color: var(--text);
 }
 
-function addDaysISO(iso, deltaDays) {
-  const dt = parseISO(iso);
-  dt.setDate(dt.getDate() + deltaDays);
-  return toISO(dt);
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px;
 }
 
-function dayOfYearFromISO(iso) {
-  const dt = parseISO(iso);
-  const start = new Date(dt.getFullYear(), 0, 1);
-  return Math.floor((dt - start) / 86400000) + 1;
+/* ---------- Header ---------- */
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 2px solid var(--frame);
+  padding: 10px 14px;
+  margin-bottom: 12px;
 }
 
-function $(id) {
-  return document.getElementById(id);
+#app-title {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
-function safe(el, fn) {
-  if (!el) return;
-  fn(el);
+#top-date-controls input,
+#top-date-controls button {
+  margin-left: 6px;
 }
 
-/* ===== Name personalization ===== */
+/* ---------- Framed panels ---------- */
 
-const appTitle = $("app-title");
-const nameModal = $("name-modal");
-const nameInput = $("name-input");
-const saveNameBtn = $("save-name-btn");
-
-const storedName = localStorage.getItem("prayerRoom:userName");
-if (!storedName) {
-  safe(nameModal, (el) => (el.hidden = false));
-} else {
-  safe(appTitle, (el) => (el.textContent = `${storedName}'s Prayer Room`));
+.framed {
+  background: var(--panel-bg);
+  border: 2px solid var(--frame);
+  padding: 10px;
 }
 
-safe(saveNameBtn, (btn) => {
-  btn.onclick = () => {
-    const name = (nameInput?.value || "").trim();
-    if (!name) return;
-    localStorage.setItem("prayerRoom:userName", name);
-    safe(appTitle, (el) => (el.textContent = `${name}'s Prayer Room`));
-    safe(nameModal, (el) => (el.hidden = true));
-  };
-});
+/* ---------- Scripture ---------- */
 
-/* ===== Doctrines ===== */
-
-const doctrines = [
-  { title: "Salvation Army Doctrine #1", text: "We believe that the Scriptures of the Old and New Testaments were given by inspiration of God, and that they only constitute the Divine rule of Christian faith and practice." },
-  { title: "Salvation Army Doctrine #2", text: "We believe that there is only one God, who is infinitely perfect, the Creator, Preserver, and Governor of all things, and who is the only proper object of religious worship." },
-  { title: "Salvation Army Doctrine #3", text: "We believe that there are three persons in the Godhead-the Father, the Son, and the Holy Ghost, undivided in essence and co-equal in power and glory." },
-  { title: "Salvation Army Doctrine #4", text: "We believe that in the person of Jesus Christ the Divine and human natures are united, so that He is truly and properly God and truly and properly man." },
-  { title: "Salvation Army Doctrine #5", text: "We believe that our first parents were created in a state of innocency, but by their disobedience, they lost their purity and happiness, and that in consequence of their fall, all men have become sinners, totally depraved, and as such are justly exposed to the wrath of God." },
-  { title: "Salvation Army Doctrine #6", text: "We believe that the Lord Jesus Christ has by His suffering and death made an atonement for the whole world so that whosoever will may be saved." },
-  { title: "Salvation Army Doctrine #7", text: "We believe that repentance toward God, faith in our Lord Jesus Christ and regeneration by the Holy Spirit are necessary to salvation." },
-  { title: "Salvation Army Doctrine #8", text: "We believe that we are justified by grace through faith in our Lord Jesus Christ and that he that believeth hath the witness in himself." },
-  { title: "Salvation Army Doctrine #9", text: "We believe that continuance in a state of salvation depends upon continued obedient faith in Christ." },
-  { title: "Salvation Army Doctrine #10", text: "We believe that it is the privilege of all believers to be wholly sanctified, and that their whole spirit and soul and body may be preserved blameless unto the coming of our Lord Jesus Christ." },
-  { title: "Salvation Army Doctrine #11", text: "We believe in the immortality of the soul, the resurrection of the body, in the general judgement at the end of the world, in the eternal happiness of the righteous, and in the endless punishment of the wicked." }
-];
-
-let doctrineIndex = 0;
-
-function renderDoctrineByIndex(idx) {
-  const safeIdx = ((idx % doctrines.length) + doctrines.length) % doctrines.length;
-  doctrineIndex = safeIdx;
-  safe($("doctrine-title"), (el) => (el.textContent = doctrines[safeIdx].title));
-  safe($("doctrine-text"), (el) => (el.textContent = doctrines[safeIdx].text));
+#scripture-section {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-function doctrineIndexForISO(iso) {
-  const doy = dayOfYearFromISO(iso);
-  return (doy - 1) % doctrines.length;
+#scripture-label {
+  font-weight: bold;
 }
 
-/* ===== Scripture dataset (cached once) ===== */
-
-let scriptureDataPromise = null;
-
-async function loadScriptureJSONOnce() {
-  if (scriptureDataPromise) return scriptureDataPromise;
-
-  scriptureDataPromise = (async () => {
-    const r = await fetch("./nlt_for_app_365.json", { cache: "no-store" });
-    if (!r.ok) throw new Error("nlt_for_app_365.json not found");
-    const data = await r.json();
-    return Array.isArray(data) ? data : (data?.verses || data?.data || []);
-  })();
-
-  return scriptureDataPromise;
+#scripture-text {
+  font-size: 1.05rem;
+  line-height: 1.4;
 }
 
-async function renderScripture(iso) {
-  safe($("scripture-text"), (el) => (el.textContent = "Loading Scripture..."));
-  safe($("scripture-ref"), (el) => (el.textContent = ""));
-
-  try {
-    const arr = await loadScriptureJSONOnce();
-    const doy = dayOfYearFromISO(iso);
-    const idx = Math.min(Math.max(doy - 1, 0), Math.max(arr.length - 1, 0));
-    const v = arr[idx] || {};
-    const verseText = String(v.text || v.verse || v.content || "").trim();
-    const verseRef = String(v.reference || v.ref || v.verse_ref || v.citation || "").trim();
-
-    safe($("scripture-text"), (el) => (el.textContent = verseText || "(No verse found)"));
-    safe($("scripture-ref"), (el) => (el.textContent = verseRef));
-  } catch (e) {
-    safe($("scripture-text"), (el) => (el.textContent = "Could not load scripture dataset."));
-    safe($("scripture-ref"), (el) => (el.textContent = ""));
-    console.error(e);
-  }
+#scripture-controls button {
+  margin-left: 4px;
 }
 
-/* ===== Storage keys ===== */
+/* ---------- Main Grid ---------- */
 
-function key(t, d) {
-  return `prayerRoom:${t}:${d}`;
+#main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-/* ===== Undo/Redo stacks (textarea-safe) ===== */
-
-function makeHistory(textarea, max = 80) {
-  const hist = { undo: [], redo: [] };
-
-  function snapshot() {
-    if (!textarea) return;
-    const v = textarea.value;
-    if (hist.undo.length && hist.undo[hist.undo.length - 1] === v) return;
-    hist.undo.push(v);
-    if (hist.undo.length > max) hist.undo.shift();
-    hist.redo.length = 0;
-  }
-
-  function undo() {
-    if (!textarea) return;
-    if (hist.undo.length <= 1) return;
-    const cur = hist.undo.pop();
-    hist.redo.push(cur);
-    textarea.value = hist.undo[hist.undo.length - 1] || "";
-  }
-
-  function redo() {
-    if (!textarea) return;
-    if (!hist.redo.length) return;
-    const v = hist.redo.pop();
-    hist.undo.push(v);
-    textarea.value = v;
-  }
-
-  return { snapshot, undo, redo, hist };
+.panel {
+  display: flex;
+  flex-direction: column;
 }
 
-/* ===== App state ===== */
+/* ---------- Ribbons ---------- */
 
-const dateInputTop = $("prayer-date");
-const dateInputInner = $("prayer-date-2");
-const todayBtnTop = $("today-btn");
-const todayBtnInner = $("today-btn-2");
-
-const scripturePrev = $("scripture-prev");
-const scriptureNext = $("scripture-next");
-const scriptureCopy = $("scripture-copy");
-
-const doctrinePrev = $("doctrine-prev");
-const doctrineNext = $("doctrine-next");
-
-const prayerList = $("prayer-list");
-const prayersText = $("prayers-text");
-const petitionsText = $("petitions-text");
-
-const saveListBtn = $("save-list");
-const savePrayerBtn = $("save-prayer");
-
-const undoListBtn = $("undo-list");
-const redoListBtn = $("redo-list");
-const undoPrayerBtn = $("undo-prayer");
-const redoPrayerBtn = $("redo-prayer");
-
-const listHistory = makeHistory(prayerList);
-const prayerHistory = makeHistory(prayersText);
-const petitionsHistory = makeHistory(petitionsText);
-
-function setCurrentISO(iso) {
-  safe(dateInputTop, (el) => (el.value = iso));
-  safe(dateInputInner, (el) => (el.value = iso));
+.ribbon {
+  font-weight: bold;
+  padding: 6px 10px;
+  margin: -10px -10px 10px -10px;
+  color: #fff;
 }
 
-function getCurrentISO() {
-  const v = dateInputTop?.value || dateInputInner?.value || todayISO();
-  return v || todayISO();
+.ribbon-green { background: var(--green); }
+.ribbon-blue  { background: var(--blue); }
+.ribbon-red   { background: var(--red); }
+
+/* ---------- Text Areas ---------- */
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  padding: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
 }
 
-function loadByDate(iso) {
-  safe(prayersText, (el) => (el.value = localStorage.getItem(key("prayer", iso)) || ""));
-  safe(petitionsText, (el) => (el.value = localStorage.getItem(key("petitions", iso)) || ""));
-  prayerHistory.snapshot();
-  petitionsHistory.snapshot();
+/* ---------- Buttons ---------- */
+
+.panel-buttons {
+  margin-top: 8px;
 }
 
-function saveByDate(iso) {
-  if (prayersText) localStorage.setItem(key("prayer", iso), prayersText.value);
-  if (petitionsText) localStorage.setItem(key("petitions", iso), petitionsText.value);
+button {
+  padding: 6px 10px;
+  margin-right: 6px;
+  cursor: pointer;
 }
 
-function loadList() {
-  safe(prayerList, (el) => (el.value = localStorage.getItem("prayerRoom:prayerList") || ""));
-  listHistory.snapshot();
+/* ---------- Prayer Split ---------- */
+
+#prayers-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-function saveList() {
-  if (!prayerList) return;
-  localStorage.setItem("prayerRoom:prayerList", prayerList.value);
+/* ---------- Doctrine ---------- */
+
+#doctrine-panel {
+  border: 3px solid var(--yellow);
+  padding: 10px;
 }
 
-function renderAllForISO(iso) {
-  renderDoctrineByIndex(doctrineIndexForISO(iso));
-  renderScripture(iso);
+#doctrine-title {
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
-/* ===== Wire events ===== */
-
-function goToISO(iso) {
-  setCurrentISO(iso);
-  loadByDate(iso);
-  renderAllForISO(iso);
+#doctrine-controls {
+  margin-top: 8px;
 }
 
-safe(todayBtnTop, (btn) => (btn.onclick = () => goToISO(todayISO())));
-safe(todayBtnInner, (btn) => (btn.onclick = () => goToISO(todayISO())));
+/* ---------- Modal ---------- */
 
-safe(dateInputTop, (el) => (el.onchange = () => goToISO(el.value)));
-safe(dateInputInner, (el) => (el.onchange = () => goToISO(el.value)));
+#name-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-safe(scripturePrev, (btn) => (btn.onclick = () => goToISO(addDaysISO(getCurrentISO(), -1))));
-safe(scriptureNext, (btn) => (btn.onclick = () => goToISO(addDaysISO(getCurrentISO(), +1))));
-safe(scriptureCopy, (btn) => {
-  btn.onclick = async () => {
-    const text = ($("scripture-text")?.textContent || "").trim();
-    const ref = ($("scripture-ref")?.textContent || "").trim();
-    const out = ref ? `${ref} — ${text}` : text;
-    try {
-      await navigator.clipboard.writeText(out);
-    } catch {
-      // If clipboard API fails, user can still select manually.
-    }
-  };
-});
-
-safe(doctrinePrev, (btn) => (btn.onclick = () => renderDoctrineByIndex(doctrineIndex - 1)));
-safe(doctrineNext, (btn) => (btn.onclick = () => renderDoctrineByIndex(doctrineIndex + 1)));
-
-safe(prayerList, (el) => (el.oninput = () => listHistory.snapshot()));
-safe(prayersText, (el) => (el.oninput = () => prayerHistory.snapshot()));
-safe(petitionsText, (el) => (el.oninput = () => petitionsHistory.snapshot()));
-
-safe(undoListBtn, (btn) => (btn.onclick = () => listHistory.undo()));
-safe(redoListBtn, (btn) => (btn.onclick = () => listHistory.redo()));
-safe(undoPrayerBtn, (btn) => (btn.onclick = () => prayerHistory.undo()));
-safe(redoPrayerBtn, (btn) => (btn.onclick = () => prayerHistory.redo()));
-
-safe(saveListBtn, (btn) => (btn.onclick = () => saveList()));
-safe(savePrayerBtn, (btn) => (btn.onclick = () => saveByDate(getCurrentISO())));
-
-/* ===== Boot ===== */
-
-loadList();
-const initial = todayISO();
-setCurrentISO(initial);
-loadByDate(initial);
-renderAllForISO(initial);
+#name-modal-box {
+  background: #fff;
+  padding: 20px;
+  border: 2px solid var(--frame);
+  max-width: 400px;
+  width: 100%;
+}
 
