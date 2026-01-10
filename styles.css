@@ -1,179 +1,98 @@
-/* =========================
-   Prayer Room — Core Layout
-   ========================= */
-
 :root {
-  --bg-main: #f7f3e9;
-  --panel-bg: #ffffff;
-  --frame: #d9cfae;
-  --text: #222;
-  --red: #c8102e;
-  --blue: #003a8f;
-  --green: #1f7a4d;
-  --yellow: #ffd100;
+  --cream-bg: #F4F1E6;
+  --header-red: #B5121B;
+  --scripture-green: #DFF3E6;
+  --list-header-green: #1F7A1F;
+  --list-bg: #F4FEF7;
+  --prayers-header-blue: #243E8F;
+  --prayers-bg: #F2F7FF;
+  --doctrine-navy: #0B2A4A;
+  --doctrine-gold: #F2C200;
 }
 
 * {
   box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg-main);
-  color: var(--text);
+  background: var(--cream-bg);
 }
 
 #app {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+#top-header {
+  background: var(--header-red);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-weight: 600;
+}
+
+#scripture-section {
   padding: 12px;
 }
 
-/* ---------- Header ---------- */
+#scripture-box {
+  background: var(--scripture-green);
+  padding: 16px;
+}
 
-#top-header {
+#main-body {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border: 2px solid var(--frame);
-  padding: 10px 14px;
-  margin-bottom: 12px;
-}
-
-#app-title {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-#top-date-controls input,
-#top-date-controls button {
-  margin-left: 6px;
-}
-
-/* ---------- Framed panels ---------- */
-
-.framed {
-  background: var(--panel-bg);
-  border: 2px solid var(--frame);
-  padding: 10px;
-}
-
-/* ---------- Scripture ---------- */
-
-#scripture-section {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-#scripture-label {
-  font-weight: bold;
-}
-
-#scripture-text {
-  font-size: 1.05rem;
-  line-height: 1.4;
-}
-
-#scripture-controls button {
-  margin-left: 4px;
-}
-
-/* ---------- Main Grid ---------- */
-
-#main-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 12px;
+  padding: 12px;
 }
 
-.panel {
-  display: flex;
-  flex-direction: column;
+#prayer-list-section {
+  width: 30%;
+  background: var(--list-bg);
 }
 
-/* ---------- Ribbons ---------- */
-
-.ribbon {
-  font-weight: bold;
-  padding: 6px 10px;
-  margin: -10px -10px 10px -10px;
+#prayer-list-section h3 {
+  background: var(--list-header-green);
   color: #fff;
-}
-
-.ribbon-green { background: var(--green); }
-.ribbon-blue  { background: var(--blue); }
-.ribbon-red   { background: var(--red); }
-
-/* ---------- Text Areas ---------- */
-
-textarea {
-  width: 100%;
-  min-height: 140px;
-  resize: vertical;
+  margin: 0;
   padding: 8px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
 }
 
-/* ---------- Buttons ---------- */
-
-.panel-buttons {
-  margin-top: 8px;
+#prayer-list {
+  min-height: 300px;
+  padding: 8px;
 }
 
-button {
-  padding: 6px 10px;
-  margin-right: 6px;
-  cursor: pointer;
+#prayers-section {
+  width: 70%;
+  background: var(--prayers-bg);
 }
 
-/* ---------- Prayer Split ---------- */
-
-#prayers-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+#prayers-section h3 {
+  background: var(--prayers-header-blue);
+  color: #fff;
+  margin: 0;
+  padding: 8px;
 }
 
-/* ---------- Doctrine ---------- */
-
-#doctrine-panel {
-  border: 3px solid var(--yellow);
-  padding: 10px;
-}
-
-#doctrine-title {
-  font-weight: bold;
-  margin-bottom: 6px;
-}
-
-#doctrine-controls {
-  margin-top: 8px;
-}
-
-/* ---------- Modal ---------- */
-
-#name-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
+#prayer-date-bar {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 8px;
+  padding: 8px;
 }
 
-#name-modal-box {
-  background: #fff;
-  padding: 20px;
-  border: 2px solid var(--frame);
-  max-width: 400px;
-  width: 100%;
+#prayers-text {
+  min-height: 300px;
+  padding: 8px;
+}
+
+#doctrine-section {
+  background: var(--doctrine-navy);
+  color: #fff;
+  border-top: 4px solid var(--doctrine-gold);
+  padding: 16px;
 }
 
