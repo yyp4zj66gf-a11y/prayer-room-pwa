@@ -1,86 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Prayer Room — Start</title>
-    <style>
-      :root {
-        --bg: #071021;
-        --card: rgba(255,255,255,0.06);
-        --card2: rgba(255,255,255,0.10);
-        --stroke: rgba(255,255,255,0.16);
-        --text: rgba(255,255,255,0.92);
-        --muted: rgba(255,255,255,0.72);
-      }
-      * { box-sizing: border-box; }
-      html, body { height: 100%; margin: 0; }
-      body {
-        background: radial-gradient(900px 500px at 20% 10%, rgba(65,105,225,0.22), transparent 60%), var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      }
-      .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 40px; }
-      h1 { margin: 6px 0 10px; font-size: 52px; letter-spacing: -0.02em; }
-      .lead { margin: 0 0 18px; color: var(--muted); font-size: 18px; line-height: 1.4; }
-      .panel {
-        border: 1px solid var(--stroke);
-        border-radius: 22px;
-        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-        box-shadow: 0 14px 60px rgba(0,0,0,0.45);
-        padding: 18px;
-      }
-      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-      @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 40px; } }
-      a.card {
-        display: block;
-        text-decoration: none;
-        color: var(--text);
-        border: 1px solid var(--stroke);
-        border-radius: 18px;
-        background: var(--card);
-        padding: 18px;
-      }
-      a.card:hover { background: var(--card2); }
-      .title { font-size: 22px; font-weight: 800; margin: 0 0 6px; }
-      .sub { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.35; }
-      .note { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
-      code { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 2px 8px; border-radius: 10px; }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <h1>Prayer Room — Start</h1>
-      <p class="lead">Choose an option below.</p>
-
-      <div class="panel">
-        <div class="grid">
-          <a class="card" href="./prayer-room.html" aria-label="Use Web App (Desktop / Mac / PC)">
-            <div class="title">Use Web App (Desktop / Mac / PC)</div>
-            <p class="sub">Opens the main Prayer Room web app.</p>
-          </a>
-
-          <a class="card" href="./iphone-ipad.html" aria-label="iPhone / iPad Version">
-            <div class="title">iPhone / iPad Version</div>
-            <p class="sub">Install help + “Open Prayer Room” button.</p>
-          </a>
-
-          <a class="card" href="./PrayerRoom-Windows.zip" aria-label="Download for Windows (PC)">
-            <div class="title">Download for Windows (PC)</div>
-            <p class="sub">Downloads the latest Windows version.</p>
-          </a>
-
-          <a class="card" href="./PrayerRoom-Mac.zip" aria-label="Download for macOS">
-            <div class="title">Download for macOS</div>
-            <p class="sub">Downloads the latest Mac version.</p>
-          </a>
-        </div>
-
-        <p class="note">
-          Downloads expect these filenames: <code>PrayerRoom-Windows.zip</code> and <code>PrayerRoom-Mac.zip</code>.
-        </p>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>PrayerSpace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: #f6f3e9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    a.button {
+      display: block;
+      padding: 16px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: #1f7a2e;
+      border-radius: 6px;
+    }
+    a.button.secondary {
+      background: #243b8a;
+    }
+    a.button.tertiary {
+      background: #b24a3a;
+    }
+    a.button.quaternary {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PrayerSpace</h1>
+    <div class="buttons">
+      <a class="button" href="/prayer-room.html">Prayer Room</a>
+      <a class="button secondary" href="#">Mac App (Coming Soon)</a>
+      <a class="button tertiary" href="#">Windows App (Coming Soon)</a>
+      <a class="button quaternary" href="#">iPad / iPhone (Coming Soon)</a>
     </div>
-  </body>
+  </div>
+</body>
 </html>
 
