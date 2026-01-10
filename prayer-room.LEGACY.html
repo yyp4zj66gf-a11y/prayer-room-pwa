@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Prayer Room</title>
+
+    <!-- FORCE absolute path so GitHub Pages + Safari load CSS -->
+    <link rel="stylesheet" href="/styles.css?v=20260110a" />
+  </head>
+
+  <body>
+    <div id="app">
+      <header id="top-header">
+        <div id="app-title">Prayer Room</div>
+
+        <div id="top-date-controls">
+          <input id="prayer-date" type="date" />
+          <button id="today-btn" type="button">Today</button>
+        </div>
+      </header>
+
+      <section id="scripture-section" class="framed">
+        <div id="scripture-left">
+          <div id="scripture-label">Daily Scripture</div>
+        </div>
+
+        <div id="scripture-box">
+          <div id="scripture-text">Loading Scripture...</div>
+          <div id="scripture-ref"></div>
+        </div>
+
+        <div id="scripture-controls">
+          <button id="scripture-prev" type="button">Prev</button>
+          <button id="scripture-next" type="button">Next</button>
+          <button id="scripture-copy" type="button">Copy</button>
+        </div>
+      </section>
+
+      <main id="main-grid">
+        <section id="prayer-list-panel" class="panel framed">
+          <div class="ribbon ribbon-green">Daily Prayer List</div>
+          <textarea id="prayer-list" spellcheck="true"></textarea>
+
+          <div class="panel-buttons">
+            <button id="save-list">Save List</button>
+            <button id="undo-list">Undo</button>
+            <button id="redo-list">Redo</button>
+          </div>
+        </section>
+
+        <section id="prayers-panel" class="panel framed">
+          <div class="ribbon ribbon-blue">Prayers &amp; Petitions</div>
+
+          <div id="prayers-toolbar">
+            <span>Date:</span>
+            <input id="prayer-date-2" type="date" />
+            <button id="today-btn-2">Today</button>
+          </div>
+
+          <div id="prayers-split">
+            <section class="subpanel framed">
+              <div class="ribbon ribbon-blue">Daily Prayer</div>
+              <textarea id="prayers-text"></textarea>
+            </section>
+
+            <section class="subpanel framed">
+              <div class="ribbon ribbon-red">Daily Petitions</div>
+              <textarea id="petitions-text"></textarea>
+            </section>
+          </div>
+
+          <div class="panel-buttons">
+            <button id="save-prayer">Save Prayer</button>
+            <button id="undo-prayer">Undo</button>
+            <button id="redo-prayer">Redo</button>
+          </div>
+        </section>
+      </main>
+
+      <footer id="doctrine-panel" class="framed">
+        <div id="doctrine-inner">
+          <div id="doctrine-title"></div>
+          <div id="doctrine-text"></div>
+        </div>
+
+        <div id="doctrine-controls">
+          <button id="doctrine-prev">Prev</button>
+          <button id="doctrine-next">Next</button>
+        </div>
+      </footer>
+    </div>
+
+    <div id="name-modal" hidden>
+      <div id="name-modal-box">
+        <div id="name-modal-title">Welcome</div>
+        <div id="name-modal-subtitle">
+          Enter your name to personalize your Prayer Room
+        </div>
+        <input id="name-input" type="text" />
+        <button id="save-name-btn">Save</button>
+      </div>
+    </div>
+
+    <!-- Absolute JS path for consistency -->
+    <script src="/app.js?v=20260110a" defer></script>
+  </body>
+</html>
+
