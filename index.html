@@ -2,50 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Prayer Room</title>
+  <title>Prayer Room — Start</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f6f6f6;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      max-width: 520px;
+      width: 90%;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    h1 {
+      margin-top: 0;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    p {
+      color: #555;
+      line-height: 1.5;
+    }
+    .buttons {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+    }
+    a.button {
+      display: block;
+      padding: 14px;
+      text-decoration: none;
+      border: 1px solid #ccc;
+      color: #222;
+      background: #fafafa;
+      transition: background 0.15s ease;
+    }
+    a.button:hover {
+      background: #eee;
+    }
+    .note {
+      margin-top: 24px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrap">
-  <div class="app">
+  <div class="container">
+    <h1>Prayer Room — Start</h1>
 
-    <div class="header">
-      <h1>Lorne’s Prayer Room</h1>
-      <div data-bind="date"></div>
+    <p>
+      Enter the Prayer Room or download the app for your device.
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="web/">
+        Use Web App (Desktop / Mac / PC)
+      </a>
+
+      <a class="button" href="mobile.html">
+        iPhone / iPad Version
+      </a>
+
+      <a class="button" href="downloads/PrayerRoom-Windows.zip">
+        Download for Windows (PC)
+      </a>
+
+      <a class="button" href="downloads/PrayerRoom-Mac.zip">
+        Download for macOS
+      </a>
     </div>
 
-    <div class="scripture" data-bind="scripture"></div>
-
-    <div class="center">
-      <div class="panel prayer-list">
-        <div class="banner green">Daily Prayer List</div>
-        <textarea class="content" data-bind="prayer-list"></textarea>
-      </div>
-
-      <div class="right">
-        <div class="panel daily-prayer">
-          <div class="banner blue">Daily Prayer</div>
-          <textarea class="content" data-bind="daily-prayer"></textarea>
-        </div>
-
-        <div class="panel petitions">
-          <div class="banner salmon">Daily Petitions</div>
-          <textarea class="content" data-bind="daily-petitions"></textarea>
-        </div>
-      </div>
+    <div class="note">
+      The desktop app provides the full Prayer Room experience.
     </div>
-
-    <div class="doctrine-outer">
-      <div class="doctrine" data-bind="doctrine"></div>
-    </div>
-
   </div>
-</div>
-
-<script src="loader.js"></script>
-<script src="render.js"></script>
 </body>
 </html>
 
