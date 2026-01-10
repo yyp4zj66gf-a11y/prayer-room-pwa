@@ -1,181 +1,299 @@
-:root {
-  --cream: #F4F1E6;
-  --red: #B5121B;
-  --green: #1F7A1F;
-  --green-bg: #F4FEF7;
-  --blue: #243E8F;
-  --blue-bg: #F2F7FF;
-  --grey-bg: #EEF2FB;
-  --scripture-bg: #DFF3E6;
-  --navy: #0B2A4A;
-  --gold: #F2C200;
+"use strict";
+
+/**
+ * /app.js
+ * Stable, deterministic: no missing-element crashes, no infinite loading.
+ * Data model: localStorage only.
+ */
+
+function todayISO() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
 
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  height: 100%;
-  background: var(--cream);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+function parseISO(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
 }
 
-#app {
-  height: 100vh;
-  display: grid;
-  grid-template-rows:
-    56px
-    min-content
-    1fr
-    min-content;
+function toISO(dt) {
+  const y = dt.getFullYear();
+  const m = String(dt.getMonth() + 1).padStart(2, "0");
+  const d = String(dt.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
-#name-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+function addDaysISO(iso, deltaDays) {
+  const dt = parseISO(iso);
+  dt.setDate(dt.getDate() + deltaDays);
+  return toISO(dt);
 }
 
-#name-modal[hidden] { display: none; }
-
-#name-modal-box {
-  background: var(--cream);
-  padding: 24px;
-  border: 3px solid var(--red);
-  width: 320px;
-  text-align: center;
+function dayOfYearFromISO(iso) {
+  const dt = parseISO(iso);
+  const start = new Date(dt.getFullYear(), 0, 1);
+  return Math.floor((dt - start) / 86400000) + 1;
 }
 
-#name-modal-box input {
-  width: 100%;
-  padding: 8px;
-  margin: 12px 0;
-  font-size: 1rem;
+function $(id) {
+  return document.getElementById(id);
 }
 
-#name-modal-box button {
-  padding: 8px 16px;
-  font-size: 1rem;
-  cursor: pointer;
+function safe(el, fn) {
+  if (!el) return;
+  fn(el);
 }
 
-#top-header {
-  background: var(--red);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 16px;
-  font-weight: 600;
+/* ===== Name personalization ===== */
+
+const appTitle = $("app-title");
+const nameModal = $("name-modal");
+const nameInput = $("name-input");
+const saveNameBtn = $("save-name-btn");
+
+const storedName = localStorage.getItem("prayerRoom:userName");
+if (!storedName) {
+  safe(nameModal, (el) => (el.hidden = false));
+} else {
+  safe(appTitle, (el) => (el.textContent = `${storedName}'s Prayer Room`));
 }
 
-#top-date-controls { display: flex; gap: 8px; align-items: center; }
+safe(saveNameBtn, (btn) => {
+  btn.onclick = () => {
+    const name = (nameInput?.value || "").trim();
+    if (!name) return;
+    localStorage.setItem("prayerRoom:userName", name);
+    safe(appTitle, (el) => (el.textContent = `${name}'s Prayer Room`));
+    safe(nameModal, (el) => (el.hidden = true));
+  };
+});
 
-#scripture-section { padding: 6px 12px; }
-#scripture-section h2 { margin: 4px 0 6px 0; }
+/* ===== Doctrines ===== */
 
-#scripture-box {
-  background: var(--scripture-bg);
-  padding: 10px 14px;
-  text-align: center;
+const doctrines = [
+  { title: "Salvation Army Doctrine #1", text: "We believe that the Scriptures of the Old and New Testaments were given by inspiration of God, and that they only constitute the Divine rule of Christian faith and practice." },
+  { title: "Salvation Army Doctrine #2", text: "We believe that there is only one God, who is infinitely perfect, the Creator, Preserver, and Governor of all things, and who is the only proper object of religious worship." },
+  { title: "Salvation Army Doctrine #3", text: "We believe that there are three persons in the Godhead-the Father, the Son, and the Holy Ghost, undivided in essence and co-equal in power and glory." },
+  { title: "Salvation Army Doctrine #4", text: "We believe that in the person of Jesus Christ the Divine and human natures are united, so that He is truly and properly God and truly and properly man." },
+  { title: "Salvation Army Doctrine #5", text: "We believe that our first parents were created in a state of innocency, but by their disobedience, they lost their purity and happiness, and that in consequence of their fall, all men have become sinners, totally depraved, and as such are justly exposed to the wrath of God." },
+  { title: "Salvation Army Doctrine #6", text: "We believe that the Lord Jesus Christ has by His suffering and death made an atonement for the whole world so that whosoever will may be saved." },
+  { title: "Salvation Army Doctrine #7", text: "We believe that repentance toward God, faith in our Lord Jesus Christ and regeneration by the Holy Spirit are necessary to salvation." },
+  { title: "Salvation Army Doctrine #8", text: "We believe that we are justified by grace through faith in our Lord Jesus Christ and that he that believeth hath the witness in himself." },
+  { title: "Salvation Army Doctrine #9", text: "We believe that continuance in a state of salvation depends upon continued obedient faith in Christ." },
+  { title: "Salvation Army Doctrine #10", text: "We believe that it is the privilege of all believers to be wholly sanctified, and that their whole spirit and soul and body may be preserved blameless unto the coming of our Lord Jesus Christ." },
+  { title: "Salvation Army Doctrine #11", text: "We believe in the immortality of the soul, the resurrection of the body, in the general judgement at the end of the world, in the eternal happiness of the righteous, and in the endless punishment of the wicked." }
+];
+
+let doctrineIndex = 0;
+
+function renderDoctrineByIndex(idx) {
+  const safeIdx = ((idx % doctrines.length) + doctrines.length) % doctrines.length;
+  doctrineIndex = safeIdx;
+  safe($("doctrine-title"), (el) => (el.textContent = doctrines[safeIdx].title));
+  safe($("doctrine-text"), (el) => (el.textContent = doctrines[safeIdx].text));
 }
 
-#scripture-text {
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.35;
+function doctrineIndexForISO(iso) {
+  const doy = dayOfYearFromISO(iso);
+  return (doy - 1) % doctrines.length;
 }
 
-#scripture-ref {
-  margin-top: 6px;
-  font-style: italic;
+/* ===== Scripture dataset (cached once) ===== */
+
+let scriptureDataPromise = null;
+
+async function loadScriptureJSONOnce() {
+  if (scriptureDataPromise) return scriptureDataPromise;
+
+  scriptureDataPromise = (async () => {
+    const r = await fetch("./nlt_for_app_365.json", { cache: "no-store" });
+    if (!r.ok) throw new Error("nlt_for_app_365.json not found");
+    const data = await r.json();
+    return Array.isArray(data) ? data : (data?.verses || data?.data || []);
+  })();
+
+  return scriptureDataPromise;
 }
 
-#canvas {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 16px;
-  padding: 16px;
-  min-height: 0;
+async function renderScripture(iso) {
+  safe($("scripture-text"), (el) => (el.textContent = "Loading Scripture..."));
+  safe($("scripture-ref"), (el) => (el.textContent = ""));
+
+  try {
+    const arr = await loadScriptureJSONOnce();
+    const doy = dayOfYearFromISO(iso);
+    const idx = Math.min(Math.max(doy - 1, 0), Math.max(arr.length - 1, 0));
+    const v = arr[idx] || {};
+    const verseText = String(v.text || v.verse || v.content || "").trim();
+    const verseRef = String(v.reference || v.ref || v.verse_ref || v.citation || "").trim();
+
+    safe($("scripture-text"), (el) => (el.textContent = verseText || "(No verse found)"));
+    safe($("scripture-ref"), (el) => (el.textContent = verseRef));
+  } catch (e) {
+    safe($("scripture-text"), (el) => (el.textContent = "Could not load scripture dataset."));
+    safe($("scripture-ref"), (el) => (el.textContent = ""));
+    console.error(e);
+  }
 }
 
-.framed {
-  outline: 2px solid rgba(0,0,0,0.15);
-  outline-offset: -2px;
+/* ===== Storage keys ===== */
+
+function key(t, d) {
+  return `prayerRoom:${t}:${d}`;
 }
 
-.ribbon {
-  text-align: center;
-  font-weight: 600;
-  padding: 6px;
+/* ===== Undo/Redo stacks (textarea-safe) ===== */
+
+function makeHistory(textarea, max = 80) {
+  const hist = { undo: [], redo: [] };
+
+  function snapshot() {
+    if (!textarea) return;
+    const v = textarea.value;
+    if (hist.undo.length && hist.undo[hist.undo.length - 1] === v) return;
+    hist.undo.push(v);
+    if (hist.undo.length > max) hist.undo.shift();
+    hist.redo.length = 0;
+  }
+
+  function undo() {
+    if (!textarea) return;
+    if (hist.undo.length <= 1) return;
+    const cur = hist.undo.pop();
+    hist.redo.push(cur);
+    textarea.value = hist.undo[hist.undo.length - 1] || "";
+  }
+
+  function redo() {
+    if (!textarea) return;
+    if (!hist.redo.length) return;
+    const v = hist.redo.pop();
+    hist.undo.push(v);
+    textarea.value = v;
+  }
+
+  return { snapshot, undo, redo, hist };
 }
 
-.ribbon-green { background: var(--green); color: white; }
-.ribbon-blue  { background: var(--blue);  color: white; }
-.ribbon-grey  { background: #D8DDE8; }
+/* ===== App state ===== */
 
-#prayer-list-section {
-  background: var(--green-bg);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+const dateInputTop = $("prayer-date");
+const dateInputInner = $("prayer-date-2");
+const todayBtnTop = $("today-btn");
+const todayBtnInner = $("today-btn-2");
+
+const scripturePrev = $("scripture-prev");
+const scriptureNext = $("scripture-next");
+const scriptureCopy = $("scripture-copy");
+
+const doctrinePrev = $("doctrine-prev");
+const doctrineNext = $("doctrine-next");
+
+const prayerList = $("prayer-list");
+const prayersText = $("prayers-text");
+const petitionsText = $("petitions-text");
+
+const saveListBtn = $("save-list");
+const savePrayerBtn = $("save-prayer");
+
+const undoListBtn = $("undo-list");
+const redoListBtn = $("redo-list");
+const undoPrayerBtn = $("undo-prayer");
+const redoPrayerBtn = $("redo-prayer");
+
+const listHistory = makeHistory(prayerList);
+const prayerHistory = makeHistory(prayersText);
+const petitionsHistory = makeHistory(petitionsText);
+
+function setCurrentISO(iso) {
+  safe(dateInputTop, (el) => (el.value = iso));
+  safe(dateInputInner, (el) => (el.value = iso));
 }
 
-#prayer-list {
-  padding: 8px;
-  flex: 1;
-  overflow-y: auto;
+function getCurrentISO() {
+  const v = dateInputTop?.value || dateInputInner?.value || todayISO();
+  return v || todayISO();
 }
 
-#prayers-section {
-  background: var(--blue-bg);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+function loadByDate(iso) {
+  safe(prayersText, (el) => (el.value = localStorage.getItem(key("prayer", iso)) || ""));
+  safe(petitionsText, (el) => (el.value = localStorage.getItem(key("petitions", iso)) || ""));
+  prayerHistory.snapshot();
+  petitionsHistory.snapshot();
 }
 
-#prayer-split {
-  display: grid;
-  grid-template-rows: 2fr 1fr;
-  flex: 1;
-  min-height: 0;
+function saveByDate(iso) {
+  if (prayersText) localStorage.setItem(key("prayer", iso), prayersText.value);
+  if (petitionsText) localStorage.setItem(key("petitions", iso), petitionsText.value);
 }
 
-#daily-prayer,
-#daily-petitions {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+function loadList() {
+  safe(prayerList, (el) => (el.value = localStorage.getItem("prayerRoom:prayerList") || ""));
+  listHistory.snapshot();
 }
 
-#prayers-text,
-#petitions-text {
-  padding: 8px;
-  flex: 1;
-  overflow-y: auto;
+function saveList() {
+  if (!prayerList) return;
+  localStorage.setItem("prayerRoom:prayerList", prayerList.value);
 }
 
-#doctrine-section {
-  background: var(--navy);
-  color: white;
-  border-top: 4px solid var(--gold);
-  padding: 10px 16px;
+function renderAllForISO(iso) {
+  renderDoctrineByIndex(doctrineIndexForISO(iso));
+  renderScripture(iso);
 }
 
-#doctrine-content {
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: center;
-  line-height: 1.35;
-  white-space: normal;
+/* ===== Wire events ===== */
+
+function goToISO(iso) {
+  setCurrentISO(iso);
+  loadByDate(iso);
+  renderAllForISO(iso);
 }
 
-#doctrine-title {
-  font-weight: 800;
-  margin-bottom: 6px;
-}
+safe(todayBtnTop, (btn) => (btn.onclick = () => goToISO(todayISO())));
+safe(todayBtnInner, (btn) => (btn.onclick = () => goToISO(todayISO())));
+
+safe(dateInputTop, (el) => (el.onchange = () => goToISO(el.value)));
+safe(dateInputInner, (el) => (el.onchange = () => goToISO(el.value)));
+
+safe(scripturePrev, (btn) => (btn.onclick = () => goToISO(addDaysISO(getCurrentISO(), -1))));
+safe(scriptureNext, (btn) => (btn.onclick = () => goToISO(addDaysISO(getCurrentISO(), +1))));
+safe(scriptureCopy, (btn) => {
+  btn.onclick = async () => {
+    const text = ($("scripture-text")?.textContent || "").trim();
+    const ref = ($("scripture-ref")?.textContent || "").trim();
+    const out = ref ? `${ref} — ${text}` : text;
+    try {
+      await navigator.clipboard.writeText(out);
+    } catch {
+      // If clipboard API fails, user can still select manually.
+    }
+  };
+});
+
+safe(doctrinePrev, (btn) => (btn.onclick = () => renderDoctrineByIndex(doctrineIndex - 1)));
+safe(doctrineNext, (btn) => (btn.onclick = () => renderDoctrineByIndex(doctrineIndex + 1)));
+
+safe(prayerList, (el) => (el.oninput = () => listHistory.snapshot()));
+safe(prayersText, (el) => (el.oninput = () => prayerHistory.snapshot()));
+safe(petitionsText, (el) => (el.oninput = () => petitionsHistory.snapshot()));
+
+safe(undoListBtn, (btn) => (btn.onclick = () => listHistory.undo()));
+safe(redoListBtn, (btn) => (btn.onclick = () => listHistory.redo()));
+safe(undoPrayerBtn, (btn) => (btn.onclick = () => prayerHistory.undo()));
+safe(redoPrayerBtn, (btn) => (btn.onclick = () => prayerHistory.redo()));
+
+safe(saveListBtn, (btn) => (btn.onclick = () => saveList()));
+safe(savePrayerBtn, (btn) => (btn.onclick = () => saveByDate(getCurrentISO())));
+
+/* ===== Boot ===== */
+
+loadList();
+const initial = todayISO();
+setCurrentISO(initial);
+loadByDate(initial);
+renderAllForISO(initial);
 
