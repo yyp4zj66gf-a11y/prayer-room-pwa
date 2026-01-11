@@ -1,97 +1,441 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prayer Room</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prayer Room (iPhone/iPad)</title>
+  <style>
+    /* This is the SAME engine as prayer-room.html, but forced stacked/mobile layout */
+    :root{
+      --bg: #efe8d6;
+      --header: #b30000;
+      --card: #ffffff;
+      --border: #2b2b2b33;
 
-  <!-- NOTE: No manifest + no service worker on purpose (prevents “ghost caching” issues). -->
-  <link rel="stylesheet" href="./styles.css" />
+      --scripture-bg: #e7f6ea;
+      --scripture-border: #1f6b2d;
+
+      --list-header: #1f7a1f;
+      --list-bg: #eaf8ee;
+      --list-border: #2e7d32;
+
+      --prayer-header: #233f8f;
+      --prayer-bg: #eef3ff;
+      --prayer-border: #203a7a;
+
+      --doctrine-bg: #0c2e5a;
+      --doctrine-border: #ffcc00;
+
+      --btn: #f3f3f3;
+      --btn-border: #33333355;
+      --btn-text: #111;
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color:#111;
+    }
+
+    .wrap{
+      width: min(920px, 96vw);
+      margin: 12px auto 18px;
+    }
+
+    .topbar{
+      background: var(--header);
+      color:#fff;
+      padding: 12px 14px;
+      border-radius: 10px 10px 0 0;
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      font-weight: 900;
+    }
+    .topbar .title{font-size: 22px;}
+    .topbar .date{font-size: 13px; opacity:.95;}
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px #00000010;
+    }
+
+    .scripture{
+      margin-top: 12px;
+      background: var(--scripture-bg);
+      border: 3px solid var(--scripture-border);
+      padding: 12px;
+    }
+    .scriptureLabel{
+      font-weight: 900;
+      margin-bottom: 6px;
+      color:#114d1f;
+    }
+    .scriptureText{
+      font-weight: 900;
+      text-align:center;
+      padding: 10px 10px;
+      background: #ffffffaa;
+      border-radius: 10px;
+      border: 1px solid #00000014;
+      line-height: 1.2;
+      font-size: 17px;
+      word-break: break-word;
+    }
+    .btnRow{
+      margin-top: 10px;
+      display:flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .btn{
+      appearance:none;
+      border: 1px solid var(--btn-border);
+      background: var(--btn);
+      color: var(--btn-text);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background:#fff;
+      border: 2px solid #1a1a1a55;
+    }
+
+    /* Forced stacked layout */
+    .stack{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .panelHeader{
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 10px 10px 0 0;
+      font-weight: 900;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .listPanel{
+      border: 3px solid var(--list-border);
+      background: var(--list-bg);
+      overflow:hidden;
+    }
+    .listPanel .panelHeader{background: var(--list-header);}
+    .listBody{padding: 10px;}
+
+    .prayerPanel{
+      border: 3px solid var(--prayer-border);
+      background: var(--prayer-bg);
+      overflow:hidden;
+    }
+    .prayerPanel .panelHeader{background: var(--prayer-header);}
+    .prayerBody{padding: 10px;}
+
+    textarea{
+      width:100%;
+      box-sizing:border-box;
+      resize:none;
+      border-radius: 10px;
+      border: 2px solid #00000022;
+      padding: 10px;
+      font-size: 16px;
+      line-height: 1.25;
+      background: #fff;
+      min-height: 220px;
+    }
+
+    .prayerControls{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      font-weight: 900;
+    }
+    .prayerControls input[type="date"]{
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 2px solid #00000022;
+      font-weight: 900;
+      background:#fff;
+    }
+
+    .doctrine{
+      margin-top: 12px;
+      border: 3px solid var(--doctrine-border);
+      background: var(--doctrine-bg);
+      color:#fff;
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .doctrineTitle{
+      text-align:center;
+      font-weight: 900;
+      font-size: 18px;
+      margin-bottom: 8px;
+      text-shadow: 0 1px 0 #00000055;
+    }
+    .doctrineText{
+      text-align:center;
+      font-weight: 900;
+      font-size: 16px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      background: #111;
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .2s ease;
+    }
+    .toast.show{opacity: .95;}
+  </style>
 </head>
-
 <body>
-  <div id="app">
-
+  <div class="wrap">
     <div class="topbar">
-      <div>
-        <div class="title" id="title">Prayer Room</div>
-        <div class="subtitle" id="dateLabel"></div>
-      </div>
-      <div class="actions">
-        <button class="btn cream mini" id="changeNameBtn">Change Name</button>
-        <button class="btn cream mini" id="exportBtn">Export</button>
-        <label class="btn cream mini file">
-          Import
-          <input type="file" id="importFile" accept="application/json" />
-        </label>
+      <div class="title">Lorne’s Prayer Room</div>
+      <div class="date" id="todayLabel"></div>
+    </div>
+
+    <div class="card scripture">
+      <div class="scriptureLabel">Daily Scripture</div>
+      <div class="scriptureText" id="scriptureText">Loading…</div>
+      <div class="btnRow">
+        <button class="btn primary" id="scrPrev">Prev</button>
+        <button class="btn primary" id="scrNext">Next</button>
+        <button class="btn primary" id="scrCopy">Copy</button>
       </div>
     </div>
 
-    <main class="wrap">
-
-      <section class="card scripture">
-        <div class="cardHead">
-          <div class="cardTitle">Daily Scripture</div>
-          <div class="cardBtns">
-            <button class="btn mini" id="scrPrev">Prev</button>
-            <button class="btn mini" id="scrNext">Next</button>
-            <button class="btn mini" id="scrCopy">Copy</button>
+    <div class="stack">
+      <div class="card listPanel">
+        <div class="panelHeader">
+          <div>Daily Prayer List</div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn primary" id="saveList">Save</button>
+            <button class="btn primary" id="undoList">Undo</button>
           </div>
         </div>
-        <div class="cardBody">
-          <div class="bigText green" id="scriptureText"></div>
+        <div class="listBody">
+          <textarea id="listBox" placeholder="Paste or type names here…"></textarea>
         </div>
-      </section>
+      </div>
 
-      <section class="center">
-
-        <div class="pane">
-          <div class="paneHead greenHead">
-            <div class="paneTitle">Daily Prayer List</div>
-            <div class="paneBtns">
-              <button class="btn mini cream" id="saveList">Save</button>
-            </div>
-          </div>
-          <div class="paneBody">
-            <textarea class="ta greenTa" id="dailyList" placeholder="Paste or type names here..."></textarea>
-            <div class="status" id="status"></div>
+      <div class="card prayerPanel">
+        <div class="panelHeader">
+          <div>Prayers &amp; Petitions</div>
+          <div class="prayerControls">
+            <label for="prayerDate">Date</label>
+            <input type="date" id="prayerDate" />
+            <button class="btn primary" id="todayBtn">Today</button>
           </div>
         </div>
-
-        <div class="pane">
-          <div class="paneHead blueHead">
-            <div class="paneTitle">Prayers &amp; Petitions</div>
-            <div class="paneBtns">
-              <span class="dateLabel">
-                Date
-                <input type="date" id="prayerDate" />
-              </span>
-              <button class="btn mini cream" id="todayBtn">Today</button>
-              <button class="btn mini cream" id="savePrayer">Save</button>
-            </div>
-          </div>
-          <div class="paneBody">
-            <textarea class="ta blueTa" id="prayerText" placeholder="Write your prayers for the selected date..."></textarea>
+        <div class="prayerBody">
+          <textarea id="prayerBox" placeholder="Write your prayers for the selected date…"></textarea>
+          <div class="btnRow" style="justify-content:flex-start;">
+            <button class="btn primary" id="savePrayer">Save</button>
+            <button class="btn primary" id="undoPrayer">Undo</button>
+            <button class="btn primary" id="redoPrayer">Redo</button>
           </div>
         </div>
+      </div>
 
-      </section>
-
-      <section class="card doctrine">
-        <div class="cardHead doctrineHead">
-          <button class="btn mini outline" id="docPrev">Prev</button>
-          <div class="doctrineTitle" id="doctrineTitle"></div>
-          <button class="btn mini outline" id="docNext">Next</button>
+      <div class="doctrine">
+        <div class="doctrineTitle" id="doctrineTitle">Salvation Army Doctrine</div>
+        <div class="btnRow" style="justify-content:center;">
+          <button class="btn primary" id="docPrev">Prev</button>
+          <button class="btn primary" id="docNext">Next</button>
         </div>
-        <div class="cardBody">
-          <div class="doctrineText" id="doctrineText"></div>
-        </div>
-      </section>
-
-    </main>
+        <div class="doctrineText" id="doctrineText">Loading…</div>
+      </div>
+    </div>
   </div>
 
-  <script src="./app.js"></script>
+  <div class="toast" id="toast"></div>
+
+<script>
+/* Same logic engine as prayer-room.html */
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  const DOCTRINES = [
+    "We believe that the Scriptures of the Old and New Testaments were given by inspiration of God, and that they only constitute the Divine rule of Christian faith and practice.",
+    "We believe that there is only one God, who is infinitely perfect, the Creator, Preserver, and Governor of all things, and who is the only proper object of religious worship.",
+    "We believe that there are three persons in the Godhead—the Father, the Son, and the Holy Ghost, undivided in essence and co-equal in power and glory.",
+    "We believe that in the person of Jesus Christ the Divine and human natures are united, so that He is truly and properly God and truly and properly man.",
+    "We believe that our first parents were created in a state of innocency, but by their disobedience, they lost their purity and happiness, and that in consequence of their fall, all men have become sinners, totally depraved, and as such are justly exposed to the wrath of God.",
+    "We believe that the Lord Jesus Christ has by His suffering and death made an atonement for the whole world so that whosoever will may be saved.",
+    "We believe that repentance toward God, faith in our Lord Jesus Christ, and regeneration by the Holy Spirit are necessary to salvation.",
+    "We believe that we are justified by grace through faith in our Lord Jesus Christ, and that he that believeth hath the witness in himself.",
+    "We believe that continuance in a state of salvation depends upon continued obedient faith in Christ.",
+    "We believe that it is the privilege of all believers to be wholly sanctified, and that their whole spirit and soul and body may be preserved blameless unto the coming of our Lord Jesus Christ.",
+    "We believe in the immortality of the soul; in the resurrection of the body; in the general judgment at the end of the world; in the eternal happiness of the righteous; and in the endless punishment of the wicked."
+  ];
+
+  let toastTimer=null;
+  function toast(msg){
+    const t=$("toast");
+    t.textContent=msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>t.classList.remove("show"),1200);
+  }
+
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function ymd(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function dayOfYear(d){
+    const start=new Date(d.getFullYear(),0,1);
+    return Math.floor((d-start)/86400000);
+  }
+
+  const JSON_CANDIDATES=["nlt_for_app_365.json","nlt_for_app_300.json","nlt_for_app_730.json","nlt_for_app.json"];
+  async function fetchFirstJson(){
+    for(const file of JSON_CANDIDATES){
+      try{
+        const res=await fetch(file+"?v="+Date.now(),{cache:"no-store"});
+        if(!res.ok) continue;
+        const data=await res.json();
+        if(Array.isArray(data)) return {file,verses:data};
+        if(data && Array.isArray(data.verses)) return {file,verses:data.verses};
+      }catch(e){}
+    }
+    throw new Error("No JSON file found. Put one of: "+JSON_CANDIDATES.join(", "));
+  }
+
+  let verses=[];
+  let scrIndex=0;
+  let docIndex=0;
+
+  function verseLine(v){
+    const ref=v.ref||v.reference||v.scripture_ref||"";
+    const text=v.text||v.scripture_text||"";
+    if(ref && text) return `${ref} — ${text}`;
+    if(ref) return ref;
+    if(text) return text;
+    return "(No scripture content found in JSON entry)";
+  }
+  function renderScripture(){
+    if(!verses.length){ $("scriptureText").textContent="No scripture data loaded."; return; }
+    $("scriptureText").textContent=verseLine(verses[scrIndex]||verses[0]);
+  }
+  async function copyScripture(){
+    const txt=$("scriptureText").textContent.trim();
+    try{ await navigator.clipboard.writeText(txt); toast("Copied."); }
+    catch(e){
+      const ta=document.createElement("textarea");
+      ta.value=txt; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); ta.remove(); toast("Copied.");
+    }
+  }
+
+  function renderDoctrine(){
+    $("doctrineTitle").textContent=`Salvation Army Doctrine #${docIndex+1}`;
+    $("doctrineText").textContent=DOCTRINES[docIndex];
+  }
+
+  const LIST_KEY="PRAYERROOM_DAILY_LIST";
+  let listUndo="";
+  function loadList(){
+    const v=localStorage.getItem(LIST_KEY)||"";
+    $("listBox").value=v; listUndo=v;
+  }
+  $("saveList").onclick=()=>{ localStorage.setItem(LIST_KEY,$("listBox").value); listUndo=$("listBox").value; toast("List saved."); };
+  $("undoList").onclick=()=>{ $("listBox").value=listUndo; toast("Undone."); };
+
+  function prayerKey(dateStr){ return "PRAYERROOM_PRAYER_"+dateStr; }
+  let prayerUndoStack=[], prayerRedoStack=[], lastPrayerValue="";
+  function loadPrayerFor(dateStr){
+    const v=localStorage.getItem(prayerKey(dateStr))||"";
+    $("prayerBox").value=v;
+    prayerUndoStack=[v]; prayerRedoStack=[]; lastPrayerValue=v;
+  }
+  function savePrayerFor(dateStr,text){ localStorage.setItem(prayerKey(dateStr),text); }
+  function pushPrayerHistory(nextVal){
+    if(nextVal===lastPrayerValue) return;
+    prayerUndoStack.push(nextVal);
+    if(prayerUndoStack.length>100) prayerUndoStack.shift();
+    prayerRedoStack=[];
+    lastPrayerValue=nextVal;
+  }
+  $("prayerBox").addEventListener("input",()=>pushPrayerHistory($("prayerBox").value));
+  $("savePrayer").onclick=()=>{ savePrayerFor($("prayerDate").value,$("prayerBox").value); toast("Prayer saved."); };
+  $("undoPrayer").onclick=()=>{
+    if(prayerUndoStack.length<=1){ toast("Nothing to undo."); return; }
+    const cur=prayerUndoStack.pop(); prayerRedoStack.push(cur);
+    const prev=prayerUndoStack[prayerUndoStack.length-1];
+    $("prayerBox").value=prev; lastPrayerValue=prev; toast("Undone.");
+  };
+  $("redoPrayer").onclick=()=>{
+    if(!prayerRedoStack.length){ toast("Nothing to redo."); return; }
+    const next=prayerRedoStack.pop(); prayerUndoStack.push(next);
+    $("prayerBox").value=next; lastPrayerValue=next; toast("Redone.");
+  };
+
+  $("scrPrev").onclick=()=>{ if(!verses.length) return; scrIndex=(scrIndex-1+verses.length)%verses.length; renderScripture(); };
+  $("scrNext").onclick=()=>{ if(!verses.length) return; scrIndex=(scrIndex+1)%verses.length; renderScripture(); };
+  $("scrCopy").onclick=copyScripture;
+
+  $("docPrev").onclick=()=>{ docIndex=(docIndex-1+DOCTRINES.length)%DOCTRINES.length; renderDoctrine(); };
+  $("docNext").onclick=()=>{ docIndex=(docIndex+1)%DOCTRINES.length; renderDoctrine(); };
+
+  function setTodayLabel(){
+    const d=new Date();
+    const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    $("todayLabel").textContent=`${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  }
+
+  $("todayBtn").onclick=()=>{ const d=new Date(); $("prayerDate").value=ymd(d); loadPrayerFor($("prayerDate").value); toast("Today."); };
+  $("prayerDate").addEventListener("change",()=>loadPrayerFor($("prayerDate").value));
+
+  async function init(){
+    setTodayLabel();
+    const now=new Date();
+    const doy=dayOfYear(now);
+
+    docIndex=doy%DOCTRINES.length;
+    renderDoctrine();
+
+    $("prayerDate").value=ymd(now);
+    loadPrayerFor($("prayerDate").value);
+    loadList();
+
+    try{
+      const out=await fetchFirstJson();
+      verses=out.verses;
+      scrIndex = verses.length===365 ? Math.min(doy, verses.length-1) : (doy % verses.length);
+      renderScripture();
+      toast("Loaded daily content.");
+    }catch(e){
+      $("scriptureText").textContent=e.message;
+      toast("Scripture JSON missing.");
+    }
+  }
+  init();
+})();
+</script>
 </body>
 </html>
 
