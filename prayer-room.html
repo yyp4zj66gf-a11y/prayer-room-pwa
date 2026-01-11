@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prayer Room</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f6f2e8;
+  color:#111;
+}
+.header{
+  background:#b30000;
+  color:#fff;
+  padding:14px 18px;
+  font-size:22px;
+  font-weight:bold;
+}
+.subheader{
+  background:#efe9d6;
+  padding:10px 18px;
+  font-size:14px;
+}
+.wrap{
+  padding:12px;
+}
+.card{
+  border-radius:4px;
+  margin-bottom:14px;
+}
+.scripture{
+  border:3px solid #2d7a2d;
+  background:#e8f6e8;
+  padding:14px;
+  text-align:center;
+}
+.scripture h2{
+  margin:0 0 10px 0;
+  font-size:20px;
+  font-weight:bold;
+}
+.scripture p{
+  margin:0;
+  font-size:18px;
+  font-weight:bold;
+}
+.container{
+  display:flex;
+  gap:14px;
+}
+.left{
+  width:28%;
+  background:#e6f3e6;
+  border:3px solid #2d7a2d;
+  padding:10px;
+}
+.left h3{
+  margin:0 0 6px 0;
+}
+.right{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.block{
+  padding:8px;
+}
+.praise{
+  flex:2;
+  border:3px solid #1f3f99;
+  background:#eef4ff;
+}
+.petitions{
+  flex:1;
+  border:3px solid #b30000;
+  background:#f9eaea;
+}
+.block h3{
+  margin:0 0 6px 0;
+}
+textarea{
+  width:100%;
+  height:100%;
+  box-sizing:border-box;
+  font-size:15px;
+  font-weight:bold;
+}
+.petitions button{
+  margin-top:6px;
+  width:100%;
+}
+.doctrine{
+  border:4px solid #ffd100;
+  background:#003366;
+  color:#fff;
+  padding:14px;
+  text-align:center;
+}
+.doctrine h3{
+  margin:0 0 8px 0;
+  font-size:20px;
+  color:#ffd100;
+}
+.doctrine p{
+  margin:0;
+  font-size:17px;
+  font-weight:bold;
+}
+.footer-spacer{
+  height:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Lorne’s Prayer Room</div>
+
+<div class="subheader">
+Date:
+<input type="date" id="datePicker">
+<button id="todayBtn">Today</button>
+</div>
+
+<div class="wrap">
+
+<div class="card scripture">
+  <h2>Daily Scripture</h2>
+  <p id="scriptureText"></p>
+</div>
+
+<div class="container">
+
+<div class="left">
+  <h3>Daily Prayer List</h3>
+  <textarea id="globalList"></textarea>
+</div>
+
+<div class="right">
+  <div class="block praise">
+    <h3>Daily Prayer of Praise</h3>
+    <textarea id="praiseBox"></textarea>
+  </div>
+  <div class="block petitions">
+    <h3>Daily Petitions</h3>
+    <textarea id="petitionBox"></textarea>
+    <button id="savePetitions">Save</button>
+  </div>
+</div>
+
+</div>
+
+<div class="card doctrine">
+  <h3 id="doctrineTitle"></h3>
+  <p id="doctrineText"></p>
+</div>
+
+<div class="footer-spacer"></div>
+
+</div>
+
+<script>
+/* =========================
+   DATA (SAFE + SCALABLE)
+   ========================= */
+
+/* Scripture pool
+   DROP VERIFIED NLT TEXTS HERE.
+   Length is reported live.
+*/
+const SCRIPTURE_POOL = [
+  { ref:"Isaiah 40:31", text:"They that wait upon the Lord shall renew their strength." },
+  { ref:"Psalm 46:1", text:"God is our refuge and strength, a very present help in trouble." }
+  // ← expand to ~200 verses here when ready
+];
+
+const DOCTRINES = [
+  "We believe that the Scriptures of the Old and New Testaments were given by inspiration of God.",
+  "We believe that there is only one God, who is infinitely perfect.",
+  "We believe that Jesus Christ is the Son of God.",
+  "We believe that in the person of Jesus Christ the divine and human natures are united.",
+  "We believe that our first parents were created innocent.",
+  "We believe that the Lord Jesus Christ has by His suffering and death made an atonement.",
+  "We believe that repentance towards God, faith in our Lord Jesus Christ, and regeneration by the Holy Spirit are necessary to salvation.",
+  "We believe that we are justified by grace through faith.",
+  "We believe that continuance in a state of salvation depends upon continued obedient faith.",
+  "We believe that it is the privilege of all believers to be wholly sanctified.",
+  "We believe in the immortality of the soul."
+];
+
+/* =========================
+   HELPERS
+   ========================= */
+const $ = id => document.getElementById(id);
+const todayISO = () => new Date().toISOString().slice(0,10);
+const dayIndex = () => Math.floor(new Date($("datePicker").value).getTime() / 86400000);
+
+/* =========================
+   LOADERS
+   ========================= */
+function loadScripture(){
+  const i = dayIndex() % SCRIPTURE_POOL.length;
+  const v = SCRIPTURE_POOL[i];
+  $("scriptureText").textContent = `${v.ref} — ${v.text}  (${SCRIPTURE_POOL.length} verses loaded)`;
+}
+function loadDoctrine(){
+  const i = dayIndex() % DOCTRINES.length;
+  $("doctrineTitle").textContent = `Salvation Army Doctrine #${i+1}`;
+  $("doctrineText").textContent = DOCTRINES[i];
+}
+function loadGlobalList(){
+  $("globalList").value = localStorage.getItem("GLOBAL_LIST") || "";
+}
+function saveGlobalList(){
+  localStorage.setItem("GLOBAL_LIST", $("globalList").value);
+}
+function loadForDate(){
+  const d = $("datePicker").value;
+  $("praiseBox").value = localStorage.getItem("PRAISE_"+d) || "";
+  $("petitionBox").value = localStorage.getItem("PET_"+d) || "";
+}
+
+/* =========================
+   EVENTS
+   ========================= */
+$("globalList").addEventListener("input", saveGlobalList);
+$("savePetitions").onclick = () => {
+  localStorage.setItem("PET_"+$("datePicker").value, $("petitionBox").value);
+};
+$("praiseBox").addEventListener("input", ()=>{
+  localStorage.setItem("PRAISE_"+$("datePicker").value, $("praiseBox").value);
+});
+$("datePicker").onchange = ()=>{
+  loadScripture();
+  loadDoctrine();
+  loadForDate();
+};
+$("todayBtn").onclick = ()=>{
+  $("datePicker").value = todayISO();
+  $("datePicker").onchange();
+};
+
+/* =========================
+   INIT
+   ========================= */
+$("datePicker").value = todayISO();
+loadScripture();
+loadDoctrine();
+loadGlobalList();
+loadForDate();
+</script>
+
+</body>
+</html>
+
