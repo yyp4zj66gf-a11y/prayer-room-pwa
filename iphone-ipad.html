@@ -16,14 +16,18 @@
       --scripture-border: #4a8f63;
 
       --list-header: #1f6b2d;
-      --list-bg: #f3b6ad;
-      --list-textarea: #ffe8e4;
+      /* Prayer List: rich pastel green */
+      --list-bg: #d7f2d9;
+      --list-textarea: #e9faeb;
 
       --prayer-header: #1f3f8a;
+      /* Daily Prayer: rich pastel blue */
       --prayer-bg: #d6e6ff;
 
       --pet-header: #2f7d32;
-      --pet-bg: #d7f2d9;
+      /* Daily Petitions: rich pastel salmon */
+      --pet-bg: #f3b6ad;
+      --pet-textarea: #ffe8e4;
 
       --doctrine-bg: #0b2c6e;
       --doctrine-border: #f2c200;
@@ -33,6 +37,8 @@
       --btn-border: #222;
 
       --forest: #0b3d2e;
+
+      --editor-max-w: 520px;
     }
 
     *{ box-sizing: border-box; }
@@ -145,33 +151,31 @@
       flex: 1 1 auto;
     }
 
-    /* Scripture reduced height; no Prev/Next */
+    /* Scripture reduced height + tighter body */
     .scripture{
       background: var(--scripture-bg);
       border-color: var(--scripture-border);
-      max-height: 160px;
+      max-height: 135px;
     }
+    .scripture .panel-body{ padding: 8px 10px; }
     .scripture-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .scrRef{
       text-align:center;
       font-weight: 950;
-      font-size: 18px;
-      margin: 4px 0 6px;
+      font-size: 17px;
+      margin: 2px 0 5px;
       color: #111;
     }
     .scrText{
       text-align:center;
       font-weight: 850;
-      font-size: 16px;
-      line-height: 1.25;
+      font-size: 15px;
+      line-height: 1.22;
       white-space: pre-wrap;
       color: var(--forest);
     }
 
-    /* Main:
-       - iPhone: stacked
-       - iPad/landscape: left/right
-    */
+    /* Main layout */
     .main{
       flex: 1 1 auto;
       min-height: 0;
@@ -188,7 +192,7 @@
       }
     }
 
-    /* Prayer list salmon */
+    /* Prayer list (pastel green) */
     .list .panel-header{ background: var(--list-header); color:#fff; }
     .list .panel-body{ background: var(--list-bg); }
     .list textarea{
@@ -202,6 +206,7 @@
       font-weight: 750;
       outline: none;
       background: var(--list-textarea);
+      color: var(--forest);
     }
     .list-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
@@ -237,8 +242,16 @@
       color: #111;
     }
 
+    /* Narrow prayer/petitions textareas on iPad/desktop */
+    .prayer .panel-body, .petitions .panel-body{
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+    }
+
     .prayer textarea, .petitions textarea{
       width: 100%;
+      max-width: var(--editor-max-w);
       height: 100%;
       min-height: 0;
       resize: none;
@@ -249,11 +262,13 @@
       font-weight: 700;
       outline: none;
       background: #fff;
+      display:block;
     }
+    .petitions textarea{ background: var(--pet-textarea); }
 
     .row-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content:flex-end; }
 
-    /* Doctrine centered; no Prev/Next; ivory text */
+    /* Doctrine centered; ivory text */
     .doctrine{
       background: var(--doctrine-bg);
       border-color: var(--doctrine-border);
