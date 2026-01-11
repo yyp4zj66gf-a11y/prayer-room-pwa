@@ -1,76 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prayer Room — iPhone / iPad</title>
-  <style>
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      margin:0;
-      background:#0b0f19;
-      color:#e5e7eb;
-    }
-    .wrap{max-width:760px;margin:0 auto;padding:22px}
-    .card{
-      background:#111827;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      padding:18px;
-      margin:14px 0;
-      box-shadow:0 10px 35px rgba(0,0,0,.35);
-    }
-    h1{margin:0 0 8px;font-size:26px}
-    p{margin:0 0 12px;line-height:1.5;color:#d1d5db}
-    a.btn{
-      display:block;
-      text-decoration:none;
-      background:#ffffff;
-      color:#0b0f19;
-      border-radius:14px;
-      padding:14px 16px;
-      font-weight:700;
-      text-align:center;
-      margin-top:10px;
-    }
-    ol{margin:0;padding-left:18px;color:#d1d5db}
-    li{margin:10px 0}
-    .muted{font-size:12px;color:#9ca3af}
-    a.back{color:#93c5fd;text-decoration:none}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prayer Room</title>
+
+  <!-- NOTE: No manifest + no service worker on purpose (prevents “ghost caching” issues). -->
+  <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
-  <div class="wrap">
+  <div id="app">
 
-    <div class="card">
-      <h1>iPhone / iPad Version</h1>
-      <p>This page helps you install Prayer Room like an app on your Home Screen.</p>
-
-      <a class="btn" href="./prayer-room.html">Open Prayer Room</a>
-
-      <p class="muted" style="margin-top:10px">
-        You can also just use it normally in Safari without installing.
-      </p>
+    <div class="topbar">
+      <div>
+        <div class="title" id="title">Prayer Room</div>
+        <div class="subtitle" id="dateLabel"></div>
+      </div>
+      <div class="actions">
+        <button class="btn cream mini" id="changeNameBtn">Change Name</button>
+        <button class="btn cream mini" id="exportBtn">Export</button>
+        <label class="btn cream mini file">
+          Import
+          <input type="file" id="importFile" accept="application/json" />
+        </label>
+      </div>
     </div>
 
-    <div class="card">
-      <p><b>Install on iPhone/iPad (Safari):</b></p>
-      <ol>
-        <li>Tap <b>Open Prayer Room</b> above</li>
-        <li>Tap <b>Share</b></li>
-        <li>Tap <b>Add to Home Screen</b></li>
-        <li>Name it “Prayer Room” → tap <b>Add</b></li>
-      </ol>
-      <p class="muted" style="margin-top:10px">
-        If you don’t see “Add to Home Screen”, scroll down inside the Share sheet.
-      </p>
-    </div>
+    <main class="wrap">
 
-    <div class="card">
-      <p><a class="back" href="./">← Back to Downloads</a></p>
-    </div>
+      <section class="card scripture">
+        <div class="cardHead">
+          <div class="cardTitle">Daily Scripture</div>
+          <div class="cardBtns">
+            <button class="btn mini" id="scrPrev">Prev</button>
+            <button class="btn mini" id="scrNext">Next</button>
+            <button class="btn mini" id="scrCopy">Copy</button>
+          </div>
+        </div>
+        <div class="cardBody">
+          <div class="bigText green" id="scriptureText"></div>
+        </div>
+      </section>
 
+      <section class="center">
+
+        <div class="pane">
+          <div class="paneHead greenHead">
+            <div class="paneTitle">Daily Prayer List</div>
+            <div class="paneBtns">
+              <button class="btn mini cream" id="saveList">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea class="ta greenTa" id="dailyList" placeholder="Paste or type names here..."></textarea>
+            <div class="status" id="status"></div>
+          </div>
+        </div>
+
+        <div class="pane">
+          <div class="paneHead blueHead">
+            <div class="paneTitle">Prayers &amp; Petitions</div>
+            <div class="paneBtns">
+              <span class="dateLabel">
+                Date
+                <input type="date" id="prayerDate" />
+              </span>
+              <button class="btn mini cream" id="todayBtn">Today</button>
+              <button class="btn mini cream" id="savePrayer">Save</button>
+            </div>
+          </div>
+          <div class="paneBody">
+            <textarea class="ta blueTa" id="prayerText" placeholder="Write your prayers for the selected date..."></textarea>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="card doctrine">
+        <div class="cardHead doctrineHead">
+          <button class="btn mini outline" id="docPrev">Prev</button>
+          <div class="doctrineTitle" id="doctrineTitle"></div>
+          <button class="btn mini outline" id="docNext">Next</button>
+        </div>
+        <div class="cardBody">
+          <div class="doctrineText" id="doctrineText"></div>
+        </div>
+      </section>
+
+    </main>
   </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
 
