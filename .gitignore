@@ -3,3 +3,7 @@
 freeze-*.zip
 freeze-*/
 
+
+DEV_*
+ARCHIVE_*
+EXPERIMENT_*
