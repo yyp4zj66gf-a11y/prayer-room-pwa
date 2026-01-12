@@ -1,36 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PrayerSpace.ca — Mobile</title>
+  <meta charset="utf-8">
+  <title>PrayerSpace – Mobile</title>
 
-  <!-- Stable entry point for QR / mobile users -->
-  <meta http-equiv="refresh" content="0; url=iphone-ipad.html" />
-
-  <script>
-    (function () {
-      // Redirect immediately to the real iPhone/iPad app page
-      var target = "iphone-ipad.html" + window.location.search + window.location.hash;
-      try { window.location.replace(target); }
-      catch (e) { window.location.href = target; }
-    })();
-  </script>
+  <!-- Critical mobile controls -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <style>
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f7f3e9;color:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:18px}
-    .card{max-width:680px;width:100%;background:#fff;border:1px solid rgba(0,0,0,.18);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.10);padding:20px}
-    h1{margin:0 0 8px 0;font-size:20px}
-    p{margin:0 0 14px 0;color:rgba(0,0,0,.65);line-height:1.45;font-size:15px}
-    a{display:inline-block;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.18);text-decoration:none;color:#111;font-weight:700;background:#fff}
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
   </style>
+
+  <!-- Redirect to the actual mobile experience -->
+  <meta http-equiv="refresh" content="0; url=web/">
 </head>
 <body>
-  <div class="card">
-    <h1>Opening PrayerSpace.ca (Mobile)…</h1>
-    <p>If you are not redirected automatically, tap below.</p>
-    <a href="iphone-ipad.html">Open iPhone / iPad Version</a>
-  </div>
 </body>
 </html>
 
