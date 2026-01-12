@@ -12,16 +12,17 @@
 
       --banner: #a40000;
 
-      --scripture-bg: #dff1e3;
+      /* Make Scripture more distinct (mintier green) */
+      --scripture-bg: #c9f4dc;
       --scripture-border: #4a8f63;
 
       /* Prayer List banner: rich yellow (Salvation Army feel) */
       --list-header: #f2c200;
-      /* Prayer List background: rich pastel blue */
-      --list-bg: #cfe2ff;
+      /* Prayer List background: richer pastel blue (more distinct from Daily Prayer) */
+      --list-bg: #c2dbff;
 
       --prayer-header: #1f3f8a;
-      /* Daily Prayer: rich pastel blue */
+      /* Daily Prayer: rich pastel blue (as requested) */
       --prayer-bg: #d6e6ff;
 
       --pet-header: #2f7d32;
@@ -73,11 +74,12 @@
       .app{ width: min(80vw, 1300px); }
     }
 
+    /* Thinner top banner */
     .header{
       background: var(--banner);
       color: #fff;
       border-radius: 12px;
-      padding: 12px 12px;
+      padding: 9px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -87,7 +89,7 @@
 
     .title{
       font-weight: 900;
-      font-size: 20px;
+      font-size: 19px;
       line-height: 1.1;
     }
 
@@ -103,10 +105,10 @@
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.25);
       color: #fff;
-      padding: 7px 10px;
+      padding: 6px 9px;
       border-radius: 999px;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 11px;
       white-space: nowrap;
     }
 
@@ -117,9 +119,9 @@
       background: var(--btn-bg);
       color: #111;
       border-radius: 12px;
-      padding: 8px 12px;
+      padding: 7px 11px;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       touch-action: manipulation;
     }
@@ -135,45 +137,47 @@
       min-height: 0;
     }
 
+    /* Thinner panel headers */
     .panel-header{
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 10px 12px;
+      padding: 7px 10px;
       font-weight: 950;
       flex: 0 0 auto;
       flex-wrap: wrap;
+      font-size: 15px;
     }
 
     .panel-body{
-      padding: 10px 12px;
+      padding: 9px 11px;
       overflow: auto;
       min-height: 0;
       flex: 1 1 auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    /* Scripture reduced height + tighter body */
+    /* Scripture reduced height + tighter type */
     .scripture{
       background: var(--scripture-bg);
       border-color: var(--scripture-border);
-      max-height: 120px;
+      max-height: 105px;
     }
-    .scripture .panel-body{ padding: 8px 10px; }
+    .scripture .panel-body{ padding: 7px 10px; }
     .scripture-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .scrRef{
       text-align:center;
       font-weight: 950;
-      font-size: 17px;
-      margin: 2px 0 5px;
+      font-size: 16px;
+      margin: 2px 0 4px;
       color: #111;
     }
     .scrText{
       text-align:center;
       font-weight: 850;
-      font-size: 15px;
-      line-height: 1.22;
+      font-size: 14px;
+      line-height: 1.18;
       white-space: pre-wrap;
       color: var(--forest);
     }
@@ -190,7 +194,6 @@
 
     @media (min-width: 820px){
       .main{
-        /* slightly narrower list column so Daily Prayer gets more room */
         grid-template-columns: 260px 1fr;
         grid-template-rows: 1fr;
       }
@@ -208,7 +211,7 @@
       font-size: 16px;
       font-weight: 800;
       outline: none;
-      background: transparent;      /* KEY: lets panel color show */
+      background: transparent;
       color: var(--forest);
       display:block;
       -webkit-overflow-scrolling: touch;
@@ -222,7 +225,7 @@
     .list .panel-header{ background: var(--list-header); color:#111; }
     .list .panel-body{
       background: var(--list-bg);
-      padding: 0;                 /* KEY: textarea provides padding */
+      padding: 0;
       display:flex;
       align-items:stretch;
     }
@@ -281,22 +284,22 @@
 
     .row-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content:flex-end; }
 
-    /* Doctrine reduced height; centered; ivory text */
+    /* Doctrine: centered; ivory text; reduced header thickness handled by .panel-header */
     .doctrine{
       background: var(--doctrine-bg);
       border-color: var(--doctrine-border);
-      max-height: 120px; /* reduced */
+      max-height: 120px;
     }
     .doctrine .panel-header{
       background: transparent;
       color: #ffd100;
-      padding-bottom: 6px;
+      padding-bottom: 5px;
       justify-content: center;
       text-align: center;
     }
     .docTitle{
       font-weight: 950;
-      font-size: 18px;
+      font-size: 17px;
       color: #ffd100;
       text-align: center;
       width: 100%;
@@ -310,7 +313,7 @@
       text-align: center;
       font-weight: 900;
       font-size: 14px;
-      line-height: 1.22;
+      line-height: 1.20;
       white-space: pre-wrap;
     }
   </style>
@@ -330,7 +333,7 @@
 
       <section class="panel scripture" aria-label="Daily Scripture">
         <div class="panel-header">
-          <div style="font-size:16px;">Daily Scripture</div>
+          <div>Daily Scripture</div>
           <div class="scripture-controls">
             <button class="btn" id="btnCopyScripture">Copy</button>
           </div>
@@ -345,7 +348,7 @@
 
         <section class="panel list" aria-label="Daily Prayer List">
           <div class="panel-header">
-            <div style="font-size:16px;">Daily Prayer List</div>
+            <div>Daily Prayer List</div>
             <div class="list-controls">
               <button class="btn" id="btnSaveList">Save</button>
               <button class="btn" id="btnUndoList">Undo</button>
@@ -360,14 +363,13 @@
 
           <section class="panel prayer" aria-label="Daily Prayer">
             <div class="panel-header">
-              <div style="font-size:16px;">Daily Prayer</div>
+              <div>Daily Prayer</div>
               <div class="date-row">
                 <label for="datePick">Date</label>
                 <input id="datePick" type="date" />
                 <button class="btn" id="btnToday">Today</button>
                 <button class="btn" id="btnSavePrayer">Save</button>
-                <button class="btn" id="btnUndoPrayer">Undo</button>
-                <button class="btn" id="btnRedoPrayer">Redo</button>
+                <!-- REMOVED: Undo / Redo buttons per your instruction -->
               </div>
             </div>
             <div class="panel-body">
@@ -377,7 +379,7 @@
 
           <section class="panel petitions" aria-label="Daily Petitions">
             <div class="panel-header">
-              <div style="font-size:16px;">Daily Petitions</div>
+              <div>Daily Petitions</div>
               <div class="row-controls">
                 <button class="btn" id="btnSavePets">Save</button>
                 <button class="btn" id="btnUndoPets">Undo</button>
@@ -486,8 +488,6 @@
 
     const taPrayer = document.getElementById('taPrayer');
     const btnSavePrayer = document.getElementById('btnSavePrayer');
-    const btnUndoPrayer = document.getElementById('btnUndoPrayer');
-    const btnRedoPrayer = document.getElementById('btnRedoPrayer');
 
     const taPets = document.getElementById('taPets');
     const btnSavePets = document.getElementById('btnSavePets');
@@ -664,8 +664,6 @@
       datePick.addEventListener('change', ()=> { if(datePick.value) setViewDate(parseYMD(datePick.value)); });
 
       btnSavePrayer.addEventListener('click', savePrayer);
-      btnUndoPrayer.addEventListener('click', ()=> doUndo(taPrayer, stacks.prayer));
-      btnRedoPrayer.addEventListener('click', ()=> doRedo(taPrayer, stacks.prayer));
 
       btnSavePets.addEventListener('click', savePets);
       btnUndoPets.addEventListener('click', ()=> doUndo(taPets, stacks.pets));
