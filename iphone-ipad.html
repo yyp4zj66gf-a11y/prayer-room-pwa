@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Prayer Room (iPhone / iPad)</title>
+  <title>Prayer Room</title>
   <style>
     :root{
       --bg: #efe8d6;
@@ -15,10 +15,10 @@
       --scripture-bg: #dff1e3;
       --scripture-border: #4a8f63;
 
-      --list-header: #1f6b2d;
-      /* Prayer List: rich pastel green */
-      --list-bg: #d7f2d9;
-      --list-textarea: #e9faeb;
+      /* Prayer List banner: rich yellow (Salvation Army feel) */
+      --list-header: #f2c200;
+      /* Prayer List background: rich pastel blue */
+      --list-bg: #cfe2ff;
 
       --prayer-header: #1f3f8a;
       /* Daily Prayer: rich pastel blue */
@@ -27,7 +27,6 @@
       --pet-header: #2f7d32;
       /* Daily Petitions: rich pastel salmon */
       --pet-bg: #f3b6ad;
-      --pet-textarea: #ffe8e4;
 
       --doctrine-bg: #0b2c6e;
       --doctrine-border: #f2c200;
@@ -53,7 +52,7 @@
       color: #111;
     }
 
-    /* 80% width on iPad/landscape */
+    /* 80% width on iPad/landscape/desktop */
     .shell{
       height: 100vh;
       width: 100%;
@@ -68,6 +67,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      min-height: 0;
     }
     @media (min-width: 820px){
       .app{ width: min(80vw, 1300px); }
@@ -112,6 +112,7 @@
 
     .btn{
       appearance: none;
+      -webkit-appearance: none;
       border: 2px solid var(--btn-border);
       background: var(--btn-bg);
       color: #111;
@@ -120,6 +121,7 @@
       font-weight: 900;
       font-size: 13px;
       cursor: pointer;
+      touch-action: manipulation;
     }
     .btn:active{ transform: translateY(1px); }
 
@@ -149,13 +151,14 @@
       overflow: auto;
       min-height: 0;
       flex: 1 1 auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Scripture reduced height + tighter body */
     .scripture{
       background: var(--scripture-bg);
       border-color: var(--scripture-border);
-      max-height: 135px;
+      max-height: 120px;
     }
     .scripture .panel-body{ padding: 8px 10px; }
     .scripture-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
@@ -187,27 +190,43 @@
 
     @media (min-width: 820px){
       .main{
-        grid-template-columns: 290px 1fr;
+        /* slightly narrower list column so Daily Prayer gets more room */
+        grid-template-columns: 260px 1fr;
         grid-template-rows: 1fr;
       }
     }
 
-    /* Prayer list (pastel green) */
-    .list .panel-header{ background: var(--list-header); color:#fff; }
-    .list .panel-body{ background: var(--list-bg); }
-    .list textarea{
+    /* Shared textarea behavior: remove box-in-box */
+    textarea{
       width: 100%;
       height: 100%;
+      min-height: 0;
       resize: none;
-      border-radius: 12px;
-      border: 2px solid #2c2c2c;
+      border: 0;
+      border-radius: 0;
       padding: 12px;
       font-size: 16px;
-      font-weight: 750;
+      font-weight: 800;
       outline: none;
-      background: var(--list-textarea);
+      background: transparent;      /* KEY: lets panel color show */
       color: var(--forest);
+      display:block;
+      -webkit-overflow-scrolling: touch;
     }
+    textarea::placeholder{
+      color: rgba(11,61,46,0.65);
+      font-weight: 750;
+    }
+
+    /* Prayer list (pastel BLUE, banner YELLOW) */
+    .list .panel-header{ background: var(--list-header); color:#111; }
+    .list .panel-body{
+      background: var(--list-bg);
+      padding: 0;                 /* KEY: textarea provides padding */
+      display:flex;
+      align-items:stretch;
+    }
+    .list textarea{ flex: 1 1 auto; }
     .list-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
     /* Right split 2/3 + 1/3 */
@@ -219,10 +238,28 @@
     }
 
     .prayer .panel-header{ background: var(--prayer-header); color:#fff; }
-    .prayer .panel-body{ background: var(--prayer-bg); }
+    .prayer .panel-body{
+      background: var(--prayer-bg);
+      padding: 0;
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+    }
 
     .petitions .panel-header{ background: var(--pet-header); color:#fff; }
-    .petitions .panel-body{ background: var(--pet-bg); }
+    .petitions .panel-body{
+      background: var(--pet-bg);
+      padding: 0;
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+    }
+
+    /* Narrow prayer/petitions editor area while keeping full panel color visible */
+    .prayer textarea, .petitions textarea{
+      max-width: var(--editor-max-w);
+      flex: 1 1 auto;
+    }
 
     .date-row{
       display:flex;
@@ -242,36 +279,13 @@
       color: #111;
     }
 
-    /* Narrow prayer/petitions textareas on iPad/desktop */
-    .prayer .panel-body, .petitions .panel-body{
-      display:flex;
-      justify-content:center;
-      align-items:stretch;
-    }
-
-    .prayer textarea, .petitions textarea{
-      width: 100%;
-      max-width: var(--editor-max-w);
-      height: 100%;
-      min-height: 0;
-      resize: none;
-      border-radius: 12px;
-      border: 2px solid #2c2c2c;
-      padding: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      outline: none;
-      background: #fff;
-      display:block;
-    }
-    .petitions textarea{ background: var(--pet-textarea); }
-
     .row-controls{ display:flex; gap: 8px; flex-wrap: wrap; justify-content:flex-end; }
 
-    /* Doctrine centered; ivory text */
+    /* Doctrine reduced height; centered; ivory text */
     .doctrine{
       background: var(--doctrine-bg);
       border-color: var(--doctrine-border);
+      max-height: 120px; /* reduced */
     }
     .doctrine .panel-header{
       background: transparent;
@@ -290,13 +304,13 @@
     .doctrine .panel-body{
       background: transparent;
       color: var(--doctrine-ivory);
-      padding-top: 0;
+      padding: 6px 10px 10px;
     }
     .docText{
       text-align: center;
       font-weight: 900;
-      font-size: 15px;
-      line-height: 1.25;
+      font-size: 14px;
+      line-height: 1.22;
       white-space: pre-wrap;
     }
   </style>
