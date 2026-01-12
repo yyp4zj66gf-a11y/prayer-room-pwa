@@ -4,100 +4,32 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PrayerSpace.ca — Mobile</title>
-  <meta name="robots" content="noindex,nofollow" />
 
-  <!--
-    Purpose:
-    - This file exists ONLY as a stable QR / mobile entry-point.
-    - It redirects immediately to the actual iPhone/iPad experience: iphone-ipad.html
-    - QR points to https://prayerspace.ca/mobile.html, so keep this file simple and reliable.
-  -->
-
+  <!-- Stable entry point for QR / mobile users -->
   <meta http-equiv="refresh" content="0; url=iphone-ipad.html" />
 
-  <style>
-    :root{
-      --bg:#f7f3e9;
-      --card:#ffffff;
-      --border:rgba(0,0,0,.18);
-      --text:#1b1b1b;
-      --muted:rgba(0,0,0,.65);
-      --shadow:0 10px 30px rgba(0,0,0,.10);
-      --radius:18px;
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background: radial-gradient(1200px 600px at 20% 10%, rgba(0,0,0,.06), transparent 60%),
-                  radial-gradient(1000px 500px at 85% 35%, rgba(0,0,0,.05), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-    }
-    .card{
-      width:min(680px, 100%);
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:22px;
-    }
-    h1{
-      margin:0 0 8px 0;
-      font-size:22px;
-      letter-spacing:.2px;
-    }
-    p{
-      margin:0 0 14px 0;
-      color:var(--muted);
-      line-height:1.45;
-      font-size:15px;
-    }
-    .btn{
-      display:inline-block;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      text-decoration:none;
-      color:var(--text);
-      background:#fff;
-      font-weight:700;
-    }
-    .small{
-      margin-top:14px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    code{
-      background:rgba(0,0,0,.06);
-      padding:2px 6px;
-      border-radius:8px;
-    }
-  </style>
-
   <script>
-    // Redirect immediately to the real mobile-friendly page.
-    // Preserve query/hash to support cache-busting (?v=...) if used.
     (function () {
+      // Redirect immediately to the real iPhone/iPad app page
       var target = "iphone-ipad.html" + window.location.search + window.location.hash;
       try { window.location.replace(target); }
       catch (e) { window.location.href = target; }
     })();
   </script>
-</head>
 
+  <style>
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f7f3e9;color:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:18px}
+    .card{max-width:680px;width:100%;background:#fff;border:1px solid rgba(0,0,0,.18);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.10);padding:20px}
+    h1{margin:0 0 8px 0;font-size:20px}
+    p{margin:0 0 14px 0;color:rgba(0,0,0,.65);line-height:1.45;font-size:15px}
+    a{display:inline-block;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.18);text-decoration:none;color:#111;font-weight:700;background:#fff}
+  </style>
+</head>
 <body>
   <div class="card">
     <h1>Opening PrayerSpace.ca (Mobile)…</h1>
-    <p>If you are not redirected automatically, tap the button below.</p>
-    <a class="btn" href="iphone-ipad.html">Open iPhone / iPad Version</a>
-    <div class="small">
-      QR entry point: <code>/mobile.html</code> → redirects to <code>/iphone-ipad.html</code>
-    </div>
+    <p>If you are not redirected automatically, tap below.</p>
+    <a href="iphone-ipad.html">Open iPhone / iPad Version</a>
   </div>
 </body>
 </html>
