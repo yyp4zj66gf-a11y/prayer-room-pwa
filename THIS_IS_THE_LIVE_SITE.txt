@@ -1,0 +1,19 @@
+PRAYERSPACE.CA — LIVE WEBSITE
+--------------------------------
+
+This folder is the authoritative local working copy
+for the live PrayerSpace.ca website.
+
+• Published via GitHub Pages
+• Branch: gh-pages
+• Repo: https://github.com/yyp4zj66gf-a11y/prayer-room-pwa.git
+• Primary files:
+    - index.html        (homepage / launcher)
+    - iphone-ipad.html  (Prayer Room app)
+    - nlt_for_app_365.json (Scripture data)
+
+DO NOT duplicate this folder casually.
+DO NOT edit copies and expect them to publish.
+
+Edits are made HERE, committed, and pushed to GitHub.
+
